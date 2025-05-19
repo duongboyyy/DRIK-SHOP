@@ -1,0 +1,229 @@
+<p-dialog #dialog header="Thêm hóa đơn" positionTop="50" [(visible)]="isShow" [modal]="true" [style]="{width: '95vw'}" [baseZIndex]="10000">
+    <form [formGroup]="formGroup">
+      <div class="row">
+        <div class="col-8">
+            <div class="form-group">
+                <!-- <div class="radio-group hidden" >
+                  <label class="custom-radio">
+                    <input 
+                      type="radio" 
+                      name="loaiDon" 
+                      [checked]="modelEdit.LoaiDon === 0"
+                      (change)="modelEdit.LoaiDon = 0">
+                    
+                    Offline
+                  </label>
+              
+                  <label class="custom-radio">
+                    <input 
+                      type="radio" 
+                      name="loaiDon" 
+                      [checked]="modelEdit.LoaiDon === 1"
+                      (change)="modelEdit.LoaiDon = 1">
+                   
+                    Online
+                  </label>
+                </div> -->
+              </div>
+              <div class="ui-g">
+                <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+                    <h1 class="__page-title">Danh Sách Sản Phẩm</h1>
+                </div>
+            
+                <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+                    
+                    <div class="__search-box">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input type="text" [ngModelOptions]="{ standalone: true }" (keyup.enter)="onSearch()" pInputText [(ngModel)]="searchPro" placeholder="Tìm kiếm">
+                        </span>
+            
+                    </div>
+                </div>
+            </div>
+              <p-table
+              [value]="dataSource"
+              [paginator]="true"
+              [rows]="limit"
+              [totalRecords]="total"
+              [lazy]="true"
+              (onLazyLoad)="getData($event)"
+              [loading]="isLoading"
+              [rowsPerPageOptions]="[10, 20, 50]"
+              [sortField]="sortField"
+              [sortOrder]="sortOrder"
+              [responsive]="true"
+              [styleClass]="'p-datatable-sm'">
+            
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="tenSanPham">Sản phẩm <p-sortIcon field="tenSanPham"></p-sortIcon></th>
+                  <th pSortableColumn="maMau">Màu <p-sortIcon field="maMau"></p-sortIcon></th>
+                  <th pSortableColumn="tenSize">Size <p-sortIcon field="tenSize"></p-sortIcon></th>
+                  <th pSortableColumn="tenSize">Giá <p-sortIcon field="giaBan"></p-sortIcon></th>
+                  <th pSortableColumn="tenSize">Giá khuyến mãi<p-sortIcon field="giaBan"></p-sortIcon></th>
+                  <th pSortableColumn="soLuongTon">Tồn kho <p-sortIcon field="soLuongTon"></p-sortIcon></th>
+                  <th>Hành động</th>
+                </tr>
+              </ng-template>
+            
+              <ng-template pTemplate="body" let-row>
+                <tr>
+                  <td>{{ row.tenSanPham }}</td>
+                  <td>{{ row.maMau }}</td>
+                  <td>{{ row.tenSize }}</td>
+                  <td>{{ row.giaBan  | hqnumber : 0 }} VND</td>
+                  <td>{{ row.khuyenMai  | hqnumber : 0 }} VND</td>
+                  <td>{{ row.soLuongTon  }}</td>
+                  <td><button pButton type="button" icon="pi pi-plus" label="Thêm" (click)="them(row)" class="p-button-sm"></button></td>
+                </tr>
+              </ng-template>
+            </p-table>
+              <!-- Chi tiết sản phẩm -->
+              
+
+        </div>
+        <div class="col-4">
+            
+            <div class="row">
+                <label for="hoaDonId" class="col-12 control-label mb-3">Thông tin khách hàng</label>
+                <div class="col-6 mb-20 mt-1">
+                    <span class="p-float-label">
+                        <input [(ngModel)]="modelEdit.name" formControlName="Name" style="width: 100%;" class="w-100-p" type="text" pInputText>
+                        <label for="float-input">Tên khách hàng</label>
+                    </span>
+                    <div class="warning-valid" *ngIf="!formGroup.controls['Name'].valid && submitted">Tên khách hàng là bắt buộc!</div>
+                </div>
+                <div class="col-6 mb-20 mt-1">
+                    <span class="p-float-label">
+                        <input [(ngModel)]="modelEdit.phone" formControlName="Phone" style="width: 100%;" class="w-100-p" type="text" pInputText>
+                        <label for="float-input">Số điện thoại</label>
+                    </span>
+                    <div class="warning-valid" *ngIf="!formGroup.controls['Phone'].valid && submitted">SĐT là bắt buộc!</div>
+                </div>
+                <div class="col-4 mb-20 mt-2">
+                    <div class="__input-wrapper" style="position: relative;">
+                        <p-dropdown [options]="list_tinh_thanh"
+                        [(ngModel)]="Tinh"
+                        formControlName="Tinh"
+                        optionLabel="name"
+                        optionValue="name"
+                        placeholder="Chọn tỉnh/thành"
+                        (onChange)="changTinhThanh($event.value)"
+                        [showClear]="true"
+                        filter="true"
+                        appendTo="body"
+                        [style]="{ width: '100%' }"
+                        [baseZIndex]="15000"></p-dropdown>
+                    </div>
+                    <div class="warning-valid" *ngIf="!formGroup.controls['Tinh'].valid && submitted">Danh mục là trường bắt buộc</div>
+                   </div>
+                   <div class="col-4 mb-20 mt-2">
+                    <div class="__input-wrapper" style="position: relative;">
+                        <p-dropdown [options]="list_quan_huyen"
+                        [(ngModel)]="Huyen"
+                        formControlName="Huyen"
+                        optionLabel="name"
+                        optionValue="name"
+                        placeholder="Chọn quận/huyện"
+                        (onChange)="changHuyenQuan($event.value)"
+                        [showClear]="true"
+                        filter="true"
+                        appendTo="body"
+                        [style]="{ width: '100%' }"
+                        [baseZIndex]="15000"></p-dropdown>
+                    </div>
+                    <div class="warning-valid" *ngIf="!formGroup.controls['Huyen'].valid && submitted">Danh mục là trường bắt buộc</div>
+                   </div>
+                   <div class="col-4 mb-20 mt-2">
+                    <div class="__input-wrapper" style="position: relative;">
+                        <p-dropdown [options]="list_xa_phuong"
+                        [(ngModel)]="Xa"
+                        formControlName="Xa"
+                        optionLabel="name"
+                        optionValue="name"
+                        placeholder="Chọn xã/phường"
+                        [showClear]="true"
+                        filter="true"
+                        appendTo="body"
+                        [style]="{ width: '100%' }"
+                        [baseZIndex]="15000"></p-dropdown>
+                    </div>
+                    <div class="warning-valid" *ngIf="!formGroup.controls['Xa'].valid && submitted">Danh mục là trường bắt buộc</div>
+                   </div>
+
+                   <label for="hoaDonId" class="col-12 control-label mb-3 mt-3">Đơn hàng</label>
+                <div class="col-12">
+                    <p-table [value]="selectedProducts"  [scrollable]="true"
+                    scrollHeight="300px">
+                        <ng-template pTemplate="header">
+                          <tr>
+                            <th>Sản phẩm</th>
+                            <th>Màu</th>
+                            <th>Size</th>
+                            <th>Số lượng</th>
+                            <th>Xóa</th>
+                          </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-prod let-i="rowIndex">
+                            <tr>
+                              <td>{{ prod?.tenSanPham }}</td>
+                              <td>{{ prod?.Mau }}</td>
+                              <td>{{ prod?.Size }}</td>
+                              <td>
+                                <input type="number"
+                                       [(ngModel)]="prod.soLuong"
+                                       (ngModelChange)="updateTotalBill()"
+                                       [ngModelOptions]="{ standalone: true }"
+                                       [min]="1"
+                                       [max]="prod.soLuongTon"
+                                       style="width: 70px;">
+                              </td>
+                              <td>
+                                <button type="button"
+                                        pButton
+                                        icon="pi pi-trash"
+                                        class="p-button-danger p-button-sm"
+                                        (click)="removeProduct(i)">
+                                </button>
+                              </td>
+                            </tr>
+                          </ng-template>
+                      </p-table>
+                </div>
+                <div class="col-12">
+                    Tổng tiền: {{totalBill| hqnumber : 0 }} VND
+                </div>
+            </div>
+            <div class="payment" style="margin-top:20px"> 
+              <strong >Thanh toán</strong>
+              <div class="radio-group" style="margin-top:10px;">
+                <label class="custom-radio">
+                  <input 
+                    type="radio" 
+                    name="loaiThanhToan" 
+                    [checked]="modelEdit.loaiThanhToan === 1"
+                    (change)="modelEdit.loaiThanhToan = 1">
+                  Thanh toán Tiền mặt
+                </label>
+            
+                <label class="custom-radio">
+                  <input 
+                    type="radio" 
+                    name="loaiThanhToan" 
+                    [checked]="modelEdit.loaiThanhToan === 2"
+                    (change)="modelEdit.loaiThanhToan = 2">
+                  Chuyển khoản ngân hàng
+                </label>
+          </div>
+          </div>
+        </div>
+      </div>
+     
+    </form>
+    <p-footer>
+      <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+      <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+    </p-footer>
+  </p-dialog>
+  

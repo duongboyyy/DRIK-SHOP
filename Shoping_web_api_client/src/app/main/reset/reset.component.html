@@ -1,0 +1,54 @@
+<div class="container">
+    <div class="main-body">
+      <div class="row">
+  
+        <!-- Phần chỉnh sửa thông tin -->
+        <div class="col-lg-8">
+          <div class="card">
+            <div class="card-body">
+              <!-- Bắt đầu form -->
+              <form [formGroup]="uFormGroup">
+                <input type="text" style="display: none;" autocomplete="username" />
+                <input type="password" style="display: none;" autocomplete="new-password" />
+                <div class="row mb-3">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">UserName</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input type="text" class="form-control" formControlName="User" autocomplete="off"/>
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">New PassWord</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input type="password" class="form-control" formControlName="New" />
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <div class="col-sm-3">
+                    <h6 class="mb-0">Confirm PassWord</h6>
+                  </div>
+                  <div class="col-sm-9 text-secondary">
+                    <input type="password" class="form-control" formControlName="ConfirmPass" />
+                  </div>
+                </div>
+            
+                <div class="row">
+                  <div class="col-sm-3"></div>
+                  <div class="col-sm-9 text-secondary">
+                    <button class="btn btn-primary" [disabled]="!uFormGroup.valid" (click)="Save()">
+                      Lưu
+                    </button>
+                  </div>
+                </div>
+              </form> 
+            </div>
+          </div>
+        </div>
+  
+      </div>
+    </div>
+  </div>
+  

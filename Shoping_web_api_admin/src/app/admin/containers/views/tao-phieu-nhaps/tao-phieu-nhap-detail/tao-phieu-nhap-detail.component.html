@@ -1,0 +1,96 @@
+
+<p-dialog #dialog header="chi tiết phiếu nhập" positionTop="50" [(visible)]="isShow" [modal]="true" [style]="{width: '80vw'}" [baseZIndex]="10000">
+  <form [formGroup]="formGroup">
+    <div class="form-group">
+      <label for="id" class="col-sm-4 control-label">Id Phiếu Nhập</label>
+      <span>{{ modelEdit?.id }}</span>
+    </div>
+    <div class="form-group">
+      <label for="nguoiLapPhieu" class="col-sm-4 control-label">Người Lập Phiếu</label>
+        <span>{{ modelEdit?.nguoiLapPhieu }}</span>
+    </div>
+    <div class="form-group">
+      <label for="soChungTu" class="col-sm-4 control-label">Số Chứng Từ</label>
+        <span>{{ modelEdit?.soChungTu }}</span>
+    </div>
+    <div class="form-group">
+      <label for="idNhaCungCap" class="col-sm-4 control-label">Id Nhà Cung Cấp</label>
+        <span>{{ modelEdit?.nhaCungCap?.id }}</span>
+    </div>
+    <div class="form-group">
+      <label for="tenNhaCungCap" class="col-sm-4 control-label">Tên Nhà Cung Cấp</label>
+        <span>{{ modelEdit?.nhaCungCap?.ten }}</span>
+    </div>
+    <div class="form-group">
+      <label for="sđt" class="col-sm-4 control-label">Số Điện Thoại</label>
+        <span>{{ modelEdit?.nhaCungCap?.sdt }}</span>
+    </div>
+    
+    <div class="form-group">
+      <label for="thongTin" class="col-sm-4 control-label">Thông Tin</label>
+        <span>{{ modelEdit?.nhaCungCap?.thongTin }}</span>
+    </div>
+    <div class="form-group">
+      <label for="diaChi" class="col-sm-4 control-label">Địa Chỉ</label>
+        <span>{{ modelEdit?.nhaCungCap?.diaChi }}</span>
+    </div>
+
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Id Sản Phẩm Biến Thể</th>
+          <th>Tên Sản Phẩm Biến Thể</th>
+          <th>Mã Lô Hàng</th>
+          <th>Giá nhập</th>
+          <th>Số lượng nhập</th>
+          <th>Nhập về kho</th>
+          <th>Thành tiền</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let chiTiet of modelEdit.chiTietPhieuNhaps">
+          <td>{{ chiTiet.id }}</td>
+          <td>{{ chiTiet.tenSanPhamBienTheMauSize }}</td>
+          <td>{{ chiTiet.maLo }}</td>
+          <td>{{ chiTiet.giaNhap | hqnumber : 0}} <i style="font-size: 10px;">VNĐ</i></td>
+          <td>{{ chiTiet.soluongNhap }}</td>
+          <td>{{ chiTiet.tenKho }}</td>
+          <td>{{ chiTiet.thanhTienNhap | hqnumber : 0}} <i style="font-size: 10px;">VNĐ</i></td>
+        </tr>
+        <h4 style="font-weight: bold; text-underline-position: auto;">Tổng tiền: {{modelEdit?.tongTien | hqnumber : 0}} <i style="font-size: 10px;">VNĐ</i></h4>
+      </tbody>
+    </table>
+    
+    <h3 style="font-weight: bold; display: inline;">Ghi chú: </h3>
+  <h4 style="display: inline;" >{{modelEdit?.ghiChu}}</h4>
+  <br>
+  <h3 style="font-weight: bold; display: inline;">Ngày lập phiếu: </h3>
+  <h4 style="display: inline;">{{ modelEdit?.ngayTao | date: 'dd/MM/yyyy HH:mm' }}</h4>
+  <br>
+  <h3 style="font-weight: bold; display: inline;">Công nợ còn: </h3>
+  <h4 style="display: inline;">{{ modelEdit?.congNo  | hqnumber : 0}} <i style="font-size: 10px;">VNĐ</i></h4>
+  <br>
+  <h3 style="font-weight: bold; display: inline;">Thanh toán: </h3>
+  <h4 style="display: inline;">{{ modelEdit?.isPayment ? 'Đã thanh toán' : 'Chưa thanh toán'}}</h4>
+  <br>
+  <h3 style="font-weight: bold; display: inline;">Người cập nhật: </h3>
+  <h4 style="display: inline;">{{ modelEdit?.nguoiCapNhat}}</h4>
+  <br>
+  <h3 style="font-weight: bold; display: inline;">Ngày cập nhật: </h3>
+  <h4 style="display: inline;">{{ modelEdit?.ngayCapNhat | date: 'dd/MM/yyyy HH:mm' }}</h4>
+  <p-dropdown 
+  filter="true" 
+  [style]="{'width':'100%'}"
+  (onChange)="onChangePayment($event)"
+  [options]="trangThai_options" 
+  optionLabel="label"
+  optionValue="value">
+</p-dropdown>
+
+  </form>
+  <p-footer>
+    <button pButton type="button" label="Cập nhật công nợ" class="p-button-outlined" (click)="onEditMutilple()"></button>
+    <button pButton type="button" label="Xuất pdf" class="p-button-outlined" (click)="exportGeneratePdf(modelEdit?.id)"></button>
+    <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+  </p-footer>
+</p-dialog>

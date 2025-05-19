@@ -1,0 +1,235 @@
+<p-dialog #dialog header="Thêm phiếu nhập" positionTop="50" [(visible)]="isShow" [modal]="true" [style]="{width: '80vw'}" [baseZIndex]="10000">
+    <form>
+        <ng-template matStepLabel>Lựa chọn nhà cung cấp</ng-template>
+            <mat-label style="font-weight: bold;">Nhà cung cấp</mat-label>
+            <!-- <select class="form-control" formControlName="nhacungcap" (change)="getSanPhamNhaCungCap($event)" style="width:70%"> 
+                <option *ngFor="let item of nhacungcaps" [value]="item.id">
+                    {{ item.ten }}
+                </option>
+            </select> -->
+            <div>
+            <p-dropdown 
+                [options]="nhacungcaps"
+                [baseZIndex]="15000"  filter="true"
+                [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"
+                [(ngModel)]="modelEdit.nhacungcap"
+                optionLabel="ten" 
+                optionValue="id" 
+                placeholder="Chọn nhà cung cấp"
+                formControlName="nhacungcap" 
+                (onChange)="getSanPhamNhaCungCap($event)">
+                </p-dropdown>
+            </div>    
+            <div class="container">
+                <table class="table" style="width:70%">
+                    <tr>
+                        <th>Id nhà cung cấp </th>
+                        <td *ngIf="this.motnhacungcap">{{this.motnhacungcap.id}}</td>
+                    </tr>
+                    <tr>
+                        <th>Tên nhà cung cấp </th>
+                        <td *ngIf="this.motnhacungcap">{{this.motnhacungcap.ten}}</td>
+                    </tr>
+                    <tr>
+                        <th>Số điện thoại</th>
+                        <td *ngIf="this.motnhacungcap">{{this.motnhacungcap.sdt}}</td>
+                    </tr>
+                    <tr>
+                        <th>Thông tin</th>
+                        <td *ngIf="this.motnhacungcap">{{this.motnhacungcap.thongTin}}</td>
+                    </tr>
+                    <tr>
+                        <th>Địa chỉ</th>
+                        <td *ngIf="this.motnhacungcap">{{this.motnhacungcap.diaChi}}</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="container">
+                <div class="row">
+                    <h4 style="font-weight: bold;margin-left: 12px;">Chọn sản phẩm biến thể và số lượng: </h4>
+                    <form [formGroup]="newFormGroupChiTiet" (ngSubmit)="onSubmitChiTiet(newFormGroupChiTiet.value)">
+                        <div class="container" style="width: 30vw;">
+                            <div class="form-group">
+                                <span class="label label-default">Tên sản phẩm</span>
+                                <!-- <select>select class="form-control" 
+                                (change)="getSanPhamBienTheSanPham($event)" >
+                                    <option *ngFor="let item of sanphams" [value]="item.id">{{item.ten}}</option>
+                                </select> -->
+                                <p-dropdown 
+                                    [options]="sanphams" 
+                                    [baseZIndex]="15000"  filter="true"
+                                    [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"
+                                    optionLabel="ten" 
+                                    optionValue="id" 
+                                    placeholder="Chọn sản phẩm" 
+                                    (onChange)="getSanPhamBienTheSanPham($event)">
+                                    </p-dropdown>
+
+                            </div>
+                            <!-- cái này chuyển sang dùng p-dropdown như cái này này -->
+                            <div class="form-group">
+                                <span class="label label-default">Tên sản phẩm biến thể</span>
+                                <!-- <select class="form-control" [disabled]="selectedFruit !== 'Apple'" formControlName="TenSanPhamBienThe">
+                                    <option *ngFor="let item of this.sanphambienthes"
+                                        [value]="item.tenSanPhamBienTheMauSize">
+                                        {{item.tenSanPhamBienTheMauSize}}
+                                    </option>
+                                </select> -->
+                                <p-dropdown 
+                                [baseZIndex]="15000"  filter="true"
+                                [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"
+                                    [options]="sanphambienthes" 
+                                    optionLabel="tenSanPhamBienTheMauSize" 
+                                    formControlName="TenSanPhamBienThe"
+                                    placeholder="Chọn sản phẩm"
+                                    [disabled]="selectedFruit !== 'Apple'">
+                                </p-dropdown>
+                                
+                                <!-- <div class="warning-valid" *ngIf="!formGroup.controls['TenSanPhamBienThe'].valid ">Danh mục là trường bắt buộc</div> -->
+                            </div>
+                            
+                            <div class="form-group">
+                                <span class="label label-default">Giá nhập sản phẩm biến thể</span>
+                                <input type="text" class="form-control" formControlName="GiaNhapSanPhamBienThe" readonly>
+                            </div>
+                            <div class="form-group">
+                                <span class="label label-default">Số lượng cần nhập</span>
+                                <!-- <select class="form-control" formControlName="SoLuongNhap">
+                                    <option [value]=50>
+                                        50 cái</option>
+                                    <option [value]=100>
+                                        100 cái</option>
+                                    <option [value]=150>
+                                        150 cái</option>
+                                    <option [value]=200>
+                                        200 cái</option>
+                                    <option [value]=250>
+                                        250 cái</option>
+                                </select> -->
+                                <p-dropdown 
+                                    [options]="[
+                                        { label: '50 cái', value: 50 },
+                                        { label: '100 cái', value: 100 },
+                                        { label: '150 cái', value: 150 },
+                                        { label: '200 cái', value: 200 },
+                                        { label: '250 cái', value: 250 }
+                                    ]" 
+                                    formControlName="SoLuongNhap" 
+                                    placeholder="-- Chọn Số Lượng --">
+                                </p-dropdown>
+                                <div *ngIf="SoLuongNhap.invalid && (SoLuongNhap.dirty || SoLuongNhap.touched)" class="alert alert-danger">
+                                    <div *ngIf="SoLuongNhap.errors.required">
+                                        Số lượng nhập không được bỏ trống
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <span class="label label-default">Chọn kho nhập về</span>
+                                <p-dropdown 
+                                    [baseZIndex]="15000"
+                                    [filter]="true"
+                                    [style]="{'width':'100%', 'min-width':'0'}"
+                                    appendTo="body"
+                                    [options]="list_warehouse" 
+                                    optionLabel="name"
+                                    optionValue="id"
+                                    formControlName="IdKho"
+                                    placeholder="Chọn kho nhập"
+                                    [disabled]="selectedFruit !== 'Apple'">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="form-group">
+                                <span class="label label-default">Ngày sản xuất</span>
+                                <p-calendar 
+                                formControlName="NgaySanXuat" 
+                                dateFormat="dd/mm/yy" 
+                                monthNavigator="true" 
+                                yearNavigator="true" 
+                                utc="true"
+                                [yearRange]="'2000:2050'">
+                              </p-calendar>
+                            </div>
+
+                            <div class="form-group">
+                                <span class="label label-default">Ngày hết hạn</span>
+                                <p-calendar 
+                                  formControlName="NgayHetHan" 
+                                  dateFormat="dd/mm/yy" 
+                                  monthNavigator="true" 
+                                  yearNavigator="true" 
+                                  utc="true"
+                                  [yearRange]="'2000:2050'"
+                                  [locale]="vi">
+                                </p-calendar>
+                              </div>
+
+                            <div class="form-group" style="justify-content:center;display: flex;">
+                                <button type="submit" class="btn btn-outline-danger btn-sm" [disabled]="this.newFormGroupChiTiet.invalid">Thêm chi tiết</button>
+                            </div>
+                        </div>
+                    </form>
+                    
+                </div>
+                <div class="row">
+                    <h4 style="font-weight: bold;">Chi tiết phiếu nhập: </h4>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th>Tên sản phẩm biến thể</th>
+                            <th>Giá nhập (VNĐ)</th>
+                            <th>Số lượng</th>
+                            <th>Ngày sản xuất</th>
+                            <th>Ngày hết hạn</th>
+                            <th>Thành tiền (VNĐ)</th>
+                            <th>Tên kho nhập</th>
+                            <th>Hành động</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr *ngFor="let item of chitiets">
+                            <td>{{ item.TenSanPhamBienThe }}</td>
+                            <td>{{ item.GiaNhapSanPhamBienThe | number }} VNĐ</td>
+                            <td>{{ item.SoLuongNhap }}</td>
+                            <td>{{item.NgayHetHan | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{item.NgaySanXuat | date: 'dd/MM/yyyy'}}</td>
+                            <td>{{ item.GiaNhapSanPhamBienThe * item.SoLuongNhap | number }} VNĐ</td>
+                            <td>{{ item.TenKho }}</td>
+                            <td>
+                            <button class="btn btn-danger" (click)="deleteDetail(item)">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                      
+                    <!-- <form [formGroup]="newFormGroupPhieuNhap" (ngSubmit)="onSubmit(newFormGroupPhieuNhap.value)">
+                        <div class="container" style="width: 30vw;">
+                            <div class="form-group">
+                                <span class="label label-default" style="font-weight: bold;">Tạo ghi chú</span>
+                                <textarea class="form-control" formControlName="GhiChu" style="margin-top: 0px; margin-bottom: 0px; height: 160px;width: 1050px;"></textarea>
+                            </div>
+                            <div class="form-group" style="justify-content:center;display: flex;">
+                                <button pButton type="submit" class="p-button-sm" [disabled]="this.newFormGroupPhieuNhap.invalid">Tạo phiếu nhập kho</button>
+                            </div>
+                        </div>
+                    </form> -->
+                </div>
+                <div class="form-group">
+                    <label for="ghiChu">Ghi chú</label>
+                    <textarea id="ghiChu" [(ngModel)]="edit.GhiChu" name="ghiChu" class="form-control" required></textarea>
+                  </div>
+            </div>
+    </form>
+    <p-footer>
+        <div class="payment"> 
+            <strong >Xác nhận thanh toán</strong>
+            <p-checkbox [(ngModel)]="isPayment" (ngModelChange)="CheckPayment($event)" [binary]="true" ></p-checkbox>
+        </div>
+        <button pButton type="submit" class="p-button-sm" (click)="save()">Tạo phiếu nhập kho</button>
+        <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+      </p-footer>
+</p-dialog>
+  

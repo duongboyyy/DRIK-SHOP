@@ -1,0 +1,65 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid transparent;
+  border-radius: .25rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px 0 rgb(218 218 253 / 65%), 0 2px 6px 0 rgb(206 206 238 / 54%);
+}
+.me-2 {
+  margin-right: .5rem!important;
+}
+
+// Container chứa các ô chọn địa chỉ
+.address-container {
+  margin:20px 0;
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+// Mỗi ô chọn (Tỉnh, Huyện, Xã)
+.address-field {
+  display: flex;
+  flex-direction: column;
+  min-width: 30%;
+}
+
+// Nhãn của dropdown
+.address-label {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+// Style dropdown
+.address-select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    outline: none;
+  }
+
+  &:hover {
+    border-color: #007bff;
+  }
+
+  &:disabled {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+  }
+}
+

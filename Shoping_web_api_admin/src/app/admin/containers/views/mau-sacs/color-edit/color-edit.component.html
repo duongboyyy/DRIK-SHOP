@@ -1,0 +1,28 @@
+<p-dialog #dialog header="Thêm/ Sửa mã màu" positionTop="50" [(visible)]="isShow" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body" [style]="{width: '20vw'}" [baseZIndex]="10000">
+
+    <div class="ui-g-12 ui-lg-12">
+        <div class="vs-form-control ui-g">
+            <form action="" [formGroup]="formGroup">
+                <div class="row" style="margin-top:20px;">
+                    <div class="col-12 mb-20">
+                        <span class="p-float-label">
+                            <input type="text" [(ngModel)]="modelEdit.maMau" formControlName="maMau" class="w-100-p" pInputText>
+                            <label for="float-input">Mã màu</label>
+                        </span>
+                        <div class="warning-valid" *ngIf="!formGroup.controls['maMau'].valid && submitted">Không được bỏ trống</div>
+                    </div>
+
+                    <div class="col-12 mb-20">
+                        <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" [emptyFilterMessage]="'Không tìm thấy kết quả'" [(ngModel)]="modelEdit.id_Loai" formControlName="id_Loai" [options]="category_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                        <div class="warning-valid" *ngIf="!formGroup.controls['id_Loai'].valid && submitted">Không được bỏ trống</div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <p-footer>
+        <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+        <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+    </p-footer>
+</p-dialog>

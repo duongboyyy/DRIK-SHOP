@@ -1,0 +1,79 @@
+<div class="ui-g">
+    <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+        <h1 class="__page-title">Danh sách nhà cung cấp</h1>
+    </div>
+
+    <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+        <div class="button">
+            <button *ngIf="checkClaim('CanAdd')" pButton type="button" label="Thêm mới" pTooltip="Thêm mới nhà cung cấp" (click)="onEdit(-1)"></button>
+        </div>
+        <div class="__search-box">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input type="text" (keyup.enter)="onSearch()" pInputText [(ngModel)]="searchModel.key" placeholder="Tìm kiếm">
+            </span>
+
+        </div>
+    </div>
+</div>
+<p-table #mainTable [columns]="cols" selectionMode="multiple" [rows]="limit" [scrollable]="true" scrollHeight="600px" [value]="dataSource" [(selection)]="selectedItems" [totalRecords]="total" class="vs-table responsive-table" [customSort]="true" (onSort)="onSort($event)" [paginator]="true" [loading]="isLoading" [lazy]="true" (onPage)="onPage($event)" [resizableColumns]="true" dataKey="id">
+    <ng-template pTemplate="colgroup" let-columns>
+        <colgroup>
+            <col [style.width]="'40px'">
+            <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                <ng-container *ngSwitchDefault>
+                    <col [hidden]="!col.visible" [style.width]="col.width" pResizableColumn>
+                </ng-container>
+            </ng-container>
+            <col [style.width]="'180px'">
+        </colgroup>
+    </ng-template>
+
+    <ng-template pTemplate="header" let-columns>
+        <tr>
+            <th class="align-center">STT</th>
+            <ng-container *ngFor="let col of columns;">
+                <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''" class="ui-resizable-column">
+                    {{col.header}}
+                    <span *ngIf="col.sort">
+                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                    </span>
+                </th>
+            </ng-container>
+            <th class="ui-text-center">
+                {{ "Thao tác" | translate }}
+            </th>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+        <tr align="center">
+            <td>{{rowIndex + 1}}</td>
+            <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                <td style="overflow: visible;" class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                    <ng-container *ngSwitchDefault>
+                        <span class="break-word">{{item[col.field]}}</span>
+                    </ng-container>
+                </td>
+            </ng-container>
+            <td class="vs-hidden-print">
+                <div class="vs-table-row-actions ui-text-center">
+                    <button *ngIf="checkClaim('CanEdit')" pButton type="button" label="" (click)="onEdit(item.id)" pTooltip="Chỉnh sửa" class="p-button-sm p-button-success"> <span class="__icon fa fa-edit"></span></button>
+                    <!-- <button pButton type="button" label="" (click)="populateForm(item)" pTooltip="Chỉnh sửa" class="p-button-sm p-button-success"> <span class="__icon fa fa-edit"></span></button> -->
+                    <button *ngIf="checkClaim('CanDelete')" pButton type="button" label="" (click)="clickDelete(item.id)" pTooltip="Xoá" class="p-button-sm p-button-danger"> <span class="__icon fa fa-times"></span></button>
+                </div>
+            </td>
+        </tr>
+    </ng-template>
+
+    <ng-template pTemplate="paginatorleft" let-state>
+        <div class="vs-table-paginator">Hiển thị
+            <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" (onChange)="onChangeRowLimit()" [options]="listItemNumberPerPage" [(ngModel)]="limit">
+            </p-dropdown>
+            / trang
+            <span class="__total-record"> - Có {{total}} mục trong danh sách</span>
+        </div>
+    </ng-template>
+</p-table>
+
+<app-supplier-edit (onSaved)="onCloseForm($event)"></app-supplier-edit>

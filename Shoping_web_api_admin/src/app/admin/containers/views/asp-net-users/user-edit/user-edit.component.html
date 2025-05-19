@@ -1,0 +1,72 @@
+<p-dialog #dialog header="Thêm/ Sửa thông tin" positionTop="50" [(visible)]="isShow" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000">
+    <form [formGroup]="formGroup">
+      <div class="row" style="margin-top:20px;">
+        <input type="text" style="display:none" autocomplete="username">
+        <input type="password" style="display:none" autocomplete="new-password">
+
+        <div class="col-12 mb-20">
+          <span class="p-float-label">
+            <input [(ngModel)]="modelEdit.userName"  formControlName="userName" class="w-100-p" type="text" pInputText />
+            <label for="userName">Tên tài khoản</label>
+          </span>
+          <!-- <div class="warning-valid" *ngIf="formGroup.controls['name'].invalid && submitted">Trường thông tin bắt buộc!</div> -->
+        </div>
+  
+        <div class="col-12 mb-20">
+          <span class="p-float-label">
+            <input [(ngModel)]="modelEdit.firstName"  formControlName="fristName" class="w-100-p" type="text" pInputText />
+            <label for="fristName">Họ đệm</label>
+          </span>
+          <!-- <div class="warning-valid" *ngIf="formGroup.controls['fristName'].invalid && submitted">Trường thông tin bắt buộc!</div> -->
+        </div>
+        <div class="col-12 mb-20">
+          <span class="p-float-label">
+            <input [(ngModel)]="modelEdit.lastName"  formControlName="lastName" class="w-100-p" type="text" pInputText />
+            <label for="lastName">Tên</label>
+          </span>
+          <!-- <div class="warning-valid" *ngIf="formGroup.controls['lastName'].invalid && submitted">Trường thông tin bắt buộc!</div> -->
+        </div>
+        <div class="col-12 mb-20">
+          <span class="p-float-label">
+            <input [(ngModel)]="modelEdit.phone"  formControlName="phone" class="w-100-p" type="text" pInputText />
+            <label for="phone">Số điện thoại</label>
+          </span>
+          <!-- <div class="warning-valid" *ngIf="formGroup.controls['phone'].invalid && submitted">Trường thông tin bắt buộc!</div> -->
+        </div>
+        <div class="col-12 mb-20">
+          <span class="p-float-label">
+            <input [(ngModel)]="modelEdit.roles"  formControlName="roles" class="w-100-p" type="text" pInputText />
+            <label for="roles">Quyền</label>
+          </span>
+          <!-- <div class="warning-valid" *ngIf="formGroup.controls['roles'].invalid && submitted">Trường thông tin bắt buộc!</div> -->
+        </div>
+        <div class="col-12 mb-20">
+          <span class="p-float-label">
+            <input [(ngModel)]="modelEdit.email"  formControlName="email" class="w-100-p" type="text" pInputText />
+            <label for="email">Email</label>
+          </span>
+          <!-- <div class="warning-valid" *ngIf="formGroup.controls['email'].invalid && submitted">Trường thông tin bắt buộc!</div> -->
+        </div>
+        <div class="col-12 mb-20" *ngIf="!isEdit">
+          <span class="p-float-label">
+            <input [(ngModel)]="modelEdit.password"  formControlName="password" class="w-100-p" type="password" pInputText />
+            <label for="password">Password</label>
+          </span>
+          <!-- <div class="warning-valid" *ngIf="formGroup.controls['password'].invalid && submitted">Trường thông tin bắt buộc!</div> -->
+        </div>
+        <div class="col-12 mb-20" *ngIf="!isEdit">
+          <span class="p-float-label">
+            <input [(ngModel)]="modelEdit.confirmPassword"  formControlName="confirmPassword" class="w-100-p" type="password" pInputText />
+            <label for="confirmPassword">ConfirmPassword</label>
+          </span>
+          <!-- <div class="warning-valid" *ngIf="formGroup.controls['confirmPassword'].invalid && submitted">Trường thông tin bắt buộc!</div> -->
+        </div>
+      </div>
+    </form>
+  
+    <p-footer>
+      <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+      <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+    </p-footer>
+  </p-dialog>
+  

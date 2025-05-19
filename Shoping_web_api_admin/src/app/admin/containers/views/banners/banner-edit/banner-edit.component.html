@@ -1,0 +1,100 @@
+<p-dialog #dialog header="Thêm/ Sửa Banner" positionTop="50" [(visible)]="isShow" [modal]="true" [style]="{width: '50vw'}" [baseZIndex]="10000">
+  <form [formGroup]="formGroup">
+    <div class="row" style="margin-top:20px;">
+      <!-- Tên banner -->
+      <div class="col-12 mb-20">
+        <span class="p-float-label">
+          <input [(ngModel)]="modelEdit.name"  formControlName="name" class="w-100-p" type="text" pInputText />
+          <label for="name">Name</label>
+        </span>
+        <div class="warning-valid" *ngIf="formGroup.controls['name'].invalid && submitted">Trường thông tin bắt buộc!</div>
+      </div>
+
+<!-- Mô tả banner -->
+      <div class="col-12 mb-20">
+        <span class="p-float-label">
+          <input [(ngModel)]="modelEdit.description" formControlName="description" class="w-100-p" type="text" pInputText />
+          <label for="description">Description</label>
+        </span>
+      </div>
+      <div class="col-12 mb-20">
+        <span class="p-float-label">
+          <input [(ngModel)]="modelEdit.link" formControlName="link" class="w-100-p" type="text" pInputText />
+          <label for="link">Link</label>
+        </span>
+      </div>
+
+      <!-- Loại banner -->
+      <div class="col-6 mb-20">
+        <div class="__input-wrapper" style="position: relative;">
+          <label for="bannerType">Type</label>
+          <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" [emptyFilterMessage]="'Không tìm thấy kết quả'" [(ngModel)]="modelEdit.bannerType" formControlName="bannerType" [options]="banner_type" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+            
+          </div>    
+       </div>
+       <!-- <div class="col-12 mb-20">
+        <span class="p-float-label">
+          <input [(ngModel)]="modelEdit.startDate" formControlName="startDate" class="w-100-p" type="datetime" pInputText />
+          <label for="startDate">Ngày bắt đầu</label>
+        </span>
+      </div>
+      
+      <div class="col-12 mb-20">
+        <span class="p-float-label">
+          <input [(ngModel)]="modelEdit.endDate" formControlName="endDate" class="w-100-p" type="datetime" pInputText />
+          <label for="endDate">Ngày kết thúc</label>
+        </span>
+      </div> -->
+
+      <div class="col-12 mb-20">
+        <span class="p-float-label">
+          <p-calendar 
+            [(ngModel)]="modelEdit.startDate" 
+            formControlName="startDate" 
+            dateFormat="dd/mm/yy" 
+            monthNavigator="true" 
+            yearNavigator="true" 
+            [yearRange]="'2000:2030'">
+          </p-calendar>
+          <label for="startDate">Ngày bắt đầu</label>
+        </span>
+      </div>
+      
+      <div class="col-12 mb-20">
+        <span class="p-float-label">
+          <p-calendar 
+            [(ngModel)]="modelEdit.endDate" 
+            formControlName="endDate" 
+    
+            dateFormat="dd/mm/yy" 
+            monthNavigator="true" 
+            yearNavigator="true" 
+            [yearRange]="'2000:2030'">
+          </p-calendar>
+          <label for="endDate">Ngày kết thúc</label>
+        </span>
+      </div>
+      <br>
+
+      <!-- File Input -->
+      <div class="form-group col-12">
+        <div class="custom-file">
+          <input type="file" id="fileInput" accept="image/*" (change)="onFileSelected($event)" class="custom-file-input">
+          <label class="custom-file-label" for="fileInput">Chọn ảnh</label>
+        </div>
+        
+        <!-- Image Preview -->
+        <div class="show-img mt-20">
+          <div  class="image-preview">
+            <img [src]="urls" class="rounded" width="180" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <p-footer>
+    <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+    <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+  </p-footer>
+</p-dialog>

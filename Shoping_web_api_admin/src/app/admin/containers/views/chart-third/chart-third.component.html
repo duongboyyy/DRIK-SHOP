@@ -1,0 +1,157 @@
+<mat-tab-group>
+    <mat-tab label="Biểu đồ thống kê tổng tiền giao dịch với nhà cung cấp">
+        <div class="container">
+            <div class="row mb-3" style="margin-top:10px">
+                <div class="col-12" style="display: flex;gap:15px;align-items: center;">
+                    <p-calendar class="maxWidth" [(ngModel)]="searchModel.fromDate" dateFormat="dd/mm/yy" class="maxWidth" psDateOnly [showIcon]="true" placeholder="Từ ngày" utc="true" psDateOnly [locale]="vi"></p-calendar>
+    
+                    <p-calendar class="maxWidth" [(ngModel)]="searchModel.toDate" dateFormat="dd/mm/yy" class="maxWidth" psDateOnly [showIcon]="true" placeholder="Đến ngày" utc="true" psDateOnly [locale]="vi"></p-calendar>
+                    
+                    <button 
+                        type="button"
+                        style="
+                            padding: 8px 12px; 
+                            font-size: 14px; 
+                            border-radius: 4px; 
+                            border: none; 
+                            cursor: pointer; 
+                            background-color: #007BFF; 
+                            color: white; 
+                            transition: background-color 0.3s, transform 0.2s;
+                        "
+                        onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';"
+                        onmouseout="this.style.backgroundColor='#007BFF'; this.style.transform='scale(1)';"
+                        onmousedown="this.style.transform='scale(0.98)';"
+                        onmouseup="this.style.transform='scale(1)';"
+                        (click)="NhaCungCapTongTien()"
+                        >
+                        Lọc
+                    </button>
+                </div>
+    
+              </div>
+            <div class="row">
+                <div class="col-6 col-md-8">
+
+                    <!-- <div class="row mb-3">
+                        <div class="col-md-4">
+                          <p-calendar [(ngModel)]="fromDate" placeholder="Từ ngày" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
+                        </div>
+                        <div class="col-md-4">
+                          <p-calendar [(ngModel)]="toDate" placeholder="Đến ngày" dateFormat="dd/mm/yy" showIcon="true"></p-calendar>
+                        </div>
+                        <div class="col-md-4 d-flex align-items-center">
+                          <button class="btn btn-primary" (click)="filterData()">Tìm kiếm</button>
+                        </div>
+                      </div> -->
+
+                    <div style="display: block">
+                        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tên nhà cung cấp</th>
+                                <th scope="col">Tổng tiền</th>
+                                <th scope="col" style="white-space: nowrap;">Số đơn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of this.ncctongtien">
+                                <td>{{item.ten}}</td>
+                                <td>{{item.tongTien|number}} VNĐ</td>
+                                <td>{{item.soDonHang|number}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Số lượng nhập hàng với nhà cung cấp">
+        <div class="container">
+            <div class="row mb-3" style="margin-top:10px">
+                <div class="col-12" style="display: flex;gap:15px;align-items: center;">
+                    <p-calendar class="maxWidth" [(ngModel)]="searchModel.fromDate" dateFormat="dd/mm/yy" class="maxWidth" psDateOnly [showIcon]="true" placeholder="Từ ngày" utc="true" psDateOnly [locale]="vi"></p-calendar>
+    
+                    <p-calendar class="maxWidth" [(ngModel)]="searchModel.toDate" dateFormat="dd/mm/yy" class="maxWidth" psDateOnly [showIcon]="true" placeholder="Đến ngày" utc="true" psDateOnly [locale]="vi"></p-calendar>
+                    
+                    <button 
+                        type="button"
+                        style="
+                            padding: 8px 12px; 
+                            font-size: 14px; 
+                            border-radius: 4px; 
+                            border: none; 
+                            cursor: pointer; 
+                            background-color: #007BFF; 
+                            color: white; 
+                            transition: background-color 0.3s, transform 0.2s;
+                        "
+                        onmouseover="this.style.backgroundColor='#0056b3'; this.style.transform='scale(1.05)';"
+                        onmouseout="this.style.backgroundColor='#007BFF'; this.style.transform='scale(1)';"
+                        onmousedown="this.style.transform='scale(0.98)';"
+                        onmouseup="this.style.transform='scale(1)';"
+                        (click)="NhaCungCapSoLuong()"
+                        >
+                        Lọc
+                    </button>
+                </div>
+    
+              </div>
+            <div class="row">
+                <div class="col-6 col-md-8">
+                    <div style="display: block">
+                        <canvas baseChart [datasets]="barChartData1" [labels]="barChartLabels1" [options]="barChartOptions" [legend]="barChartLegend1" [chartType]="barChartType1" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tên nhà cung cấp</th>
+                                <th scope="col" style="white-space: nowrap;">Số lượng</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of this.nccsoluong">
+                                <td>{{item.ten}}</td>
+                                <td>{{item.soLuong}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Sản phẩm tồn kho">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-md-8">
+                    <div style="display: block">
+                        <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2" [options]="barChartOptions" [legend]="barChartLegend2" [chartType]="barChartType2" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+                <div class="col-6 col-md-4">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Tên Sản Phẩm </th>
+                                <th scope="col" style="white-space: nowrap;">Số lượng tồn</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let item of this.slt">
+                                <td>{{item.ten}}</td>
+                                <td>{{item.soLuongTon}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+</mat-tab-group>
+<!-- <h4>Số lượng tất cả sản phẩm biến thể tồn trong kho: {{ this.soLuongTon}} sản phẩm</h4> -->

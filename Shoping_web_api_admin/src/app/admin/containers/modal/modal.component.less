@@ -1,0 +1,52 @@
+app-modal {  
+    display: none;  
+    .app-modal {  
+        position: absolute;
+        top: 60px;
+        right: 170px;
+        bottom: 0;
+        z-index: 1000;
+        overflow: auto;
+        .app-modal-body {  
+            padding: 10px;
+            background: #f1f1f1;
+            overflow-y: auto;
+            width: 300px;
+            height: 450px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }  
+    }  
+    .app-modal-background {  
+        position: fixed;  
+        top: 0;  
+        right: 0;  
+        bottom: 0;  
+        left: 0;  
+        // background-color: #000;  
+        opacity: 0.75;  
+        z-index: 900;  
+    }  
+}  
+body.app-modal-open {  
+    overflow: hidden;  
+}  
+
+app-modal .app-modal .app-modal-body::-webkit-scrollbar {
+    width: 12px;
+}
+
+app-modal .app-modal .app-modal-body::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+app-modal .app-modal .app-modal-body::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+    border: 3px solid #f1f1f1;
+}
+
+app-modal .app-modal .app-modal-body::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}

@@ -1,0 +1,75 @@
+<p-dialog #dialog header="Thêm/ Sửa kho" positionTop="50" [(visible)]="isShow"
+    [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body" [style]="{width: '50vw'}"
+    [baseZIndex]="10000">
+
+  <form [formGroup]="formGroup">
+    <div class="row" style="margin-top:20px;">
+      <div class="col-12 mb-20">
+        <span class="p-float-label">
+          <input formControlName="Name" class="w-100-p" type="text" pInputText>
+          <label>Tên kho</label>
+        </span>
+        <div class="warning-valid" *ngIf="!formGroup.controls['Name'].valid && submitted">Tên kho là bắt buộc!</div>
+      </div>
+
+      <div class="col-4 mb-20">
+        <p-dropdown [options]="list_tinh_thanh"
+          formControlName="Tinh"
+          optionLabel="name"
+          optionValue="name"
+          placeholder="Chọn tỉnh/thành"
+          (onChange)="changeTinhThanh($event.value)"
+          [showClear]="true"
+          filter="true"
+          appendTo="body"
+          [style]="{ width: '100%' }"
+          [baseZIndex]="15000">
+        </p-dropdown>
+        <div class="warning-valid" *ngIf="!formGroup.controls['Tinh'].valid && submitted">Bắt buộc chọn Tỉnh/Thành</div>
+      </div>
+
+      <div class="col-4 mb-20">
+        <p-dropdown [options]="list_quan_huyen"
+          formControlName="Huyen"
+          optionLabel="name"
+          optionValue="name"
+          placeholder="Chọn quận/huyện"
+          (onChange)="changeHuyenQuan($event.value)"
+          [showClear]="true"
+          filter="true"
+          appendTo="body"
+          [style]="{ width: '100%' }"
+          [baseZIndex]="15000">
+        </p-dropdown>
+        <div class="warning-valid" *ngIf="!formGroup.controls['Huyen'].valid && submitted">Bắt buộc chọn Quận/Huyện</div>
+      </div>
+
+      <div class="col-4 mb-20">
+        <p-dropdown [options]="list_xa_phuong"
+          formControlName="Xa"
+          optionLabel="name"
+          optionValue="name"
+          placeholder="Chọn xã/phường"
+          [showClear]="true"
+          filter="true"
+          appendTo="body"
+          [style]="{ width: '100%' }"
+          [baseZIndex]="15000">
+        </p-dropdown>
+        <div class="warning-valid" *ngIf="!formGroup.controls['Xa'].valid && submitted">Bắt buộc chọn Xã/Phường</div>
+      </div>
+
+      <div class="col-12 mb-20">
+        <span class="p-float-label">
+          <input class="w-100-p" formControlName="Address" type="text" pInputText>
+          <label>Địa chỉ</label>
+        </span>
+      </div>
+    </div>
+  </form>
+
+  <p-footer>
+    <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+    <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+  </p-footer>
+</p-dialog>

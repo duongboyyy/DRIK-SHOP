@@ -1,0 +1,73 @@
+<div class="vs-page-content app-cuccer-index">
+    <div class="vs-page-content-header-area">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+                <h1 class="__page-title">Thống kê số lượng đơn hàng</h1>
+            </div>
+
+            <!-- <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+                <div class="__search-box">
+                    <input type="search" placeholder="Nhập thông tin tìm kiếm" name="search" class="__input vs-input"
+                        (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+                    <span class="__toggle-search-adv" (click)="toggleSearch()">
+                        <span [hidden]="openSearchAdv" class="fa fa-angle-double-down"></span>
+                        <span [hidden]="!openSearchAdv" class="fa fa-angle-double-up "></span>
+                    </span>
+                    <span class="__search-btn" (click)="onSearch()">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+            </div> -->
+        </div>
+
+        <div class="ui-g" [hidden]="!openSearchAdv">
+            <div class="ui-g-12 __search-filter-wrapper">
+                <p-dropdown [showClear]="true" placeholder="-- Năm --" appendTo="body"
+                    [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}"
+                    [(ngModel)]="searchModel.year" [options]="list_year" (onChange)="onSearch()">
+                </p-dropdown>
+                <p-dropdown [showClear]="true" placeholder="-- Tháng --" appendTo="body"
+                    [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}"
+                    [(ngModel)]="searchModel.month" [options]="list_month" (onChange)="onSearch()">
+                </p-dropdown>
+                <!-- <p-dropdown [showClear]="true" placeholder="-- Tỉnh/thành phố --" appendTo="body"
+                    [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}"
+                    [(ngModel)]="searchModel.idProvince" [options]="list_units" (onChange)="loadShops()">
+                </p-dropdown> -->
+                <p-dropdown [showClear]="true" placeholder="-- Cửa hàng --" appendTo="body"
+                    [emptyFilterMessage]="'Chọn tỉnh/thành phố để xem cửa hàng'" filter="true"
+                    [style]="{'width':'100%'}" [(ngModel)]="searchModel.idShop" [options]="list_shops"
+                    (onChange)="onSearch()">
+                </p-dropdown>
+                <!-- <p-calendar class="maxWidth" [(ngModel)]="searchModel.fromDate" dateFormat="dd/mm/yy" class="maxWidth"
+                    psDateOnly [showIcon]="true" placeholder="Từ ngày" utc="true" psDateOnly [locale]="vi"></p-calendar>
+
+                <p-calendar class="maxWidth" [(ngModel)]="searchModel.toDate" dateFormat="dd/mm/yy" class="maxWidth"
+                    psDateOnly [showIcon]="true" placeholder="Đến ngày" utc="true" psDateOnly
+                    [locale]="vi"></p-calendar> -->
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" type="button" (click)="onSearch()">
+                    <span class="__icon fa fa-search"></span>
+                    <span class="__label">Thống kê</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="vs-page-content-body-area">
+        <div class="ui-g rows">
+            <div class="ui-g-12 ui-lg-12">
+                <p-selectButton [options]="list_dateType" [(ngModel)]="this.searchModel.dateType"
+                    (click)="onSearch()"></p-selectButton>
+            </div>
+        </div>
+        <div class="ui-g rows vs-page-content-body-area">
+            <div class="ui-g-12 ui-lg-12">
+                <canvas id="myChartTotalOrder" style="position:relative; height:40vh; width:20vw"></canvas>
+            </div>
+        </div>
+        <div class="ui-g rows vs-page-content-body-area" style="margin-top: 20px;">
+            <div class="ui-g-12 ui-lg-12">
+                <canvas id="myChartTotalBill" style="position:relative; height:40vh; width:20vw"></canvas>
+            </div>
+        </div>
+    </div>
+</div>

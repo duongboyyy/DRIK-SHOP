@@ -1,0 +1,168 @@
+<!-- breadcrumb -->
+<div class="container">
+    <div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
+        <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+            Trang chủ
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+        <a href="product.html" class="stext-109 cl8 hov-cl1 trans-04">
+            Lịch sử mua hàng
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+    </div>
+</div>
+<div class="main-container container">
+    <div class="row">
+        <!--Middle Part Start-->
+        <div id="content" class="col-sm-12">
+            <!-- Hiển thị thông tin đơn hàng -->
+<h2 class="title">Thông tin đơn hàng</h2>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td colspan="2" class="text-left">Chi tiết hoá đơn</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td style="width: 50%;" class="text-left">
+                <b>Mã hoá đơn:</b> {{ bill?.maHoaDon }}<br>
+                <b>Ngày mua:</b> {{ bill?.ngayTao | date: 'dd/MM/yyyy HH:mm' }} <br>
+                <b>Thanh toán: {{bill?.isPayed ? 'Đã thanh toán' : 'Chưa thanh toán'}}</b>
+            </td>
+            <td style="width: 50%;" class="text-left">
+                <b>Phương thức thanh toán:</b> 
+                {{ bill?.loaiThanhToan === 1 ? 'Thanh toán khi nhận hàng' : bill?.loaiThanhToan === 2 ? 'Thanh toán qua Vnpay' : 'Không xác định' }}
+                <br>
+                <b>Vận chuyển:</b><br>
+                <b>Trạng thái đơn hàng: </b>
+                    {{ bill?.trangThai === 0 ? 'Chờ xác nhận' :
+                    bill?.trangThai === 1 ? 'Đã xác nhận' :
+                    bill?.trangThai === 2 ? 'Hoàn thành' :
+                    bill?.trangThai === 3 ? 'Hủy' :
+                    bill?.trangThai === 4 ? 'Giao hàng' :
+                    bill?.trangThai === 5 ? 'Chờ thanh toán (Thanh toán lại)' : 
+                    bill?.trangThai === 6 ? 'Yêu cầu hoàn hàng' :
+                    bill?.trangThai === 7 ? 'Đang xử lý đơn hoàn' :
+                    bill?.trangThai === 8 ? 'Hoàn hàng tất cả' :
+                    bill?.trangThai === 9 ? 'Hoàn hàng hủy' :
+                    bill?.trangThai === 10 ? 'Hoàn hàng một phần' :
+                    'Lỗi thanh toán' }}
+                <br>
+                <b *ngIf="bill?.trangThai === 6 || bill?.trangThai === 7 || bill?.trangThai === 8 || bill?.trangThai === 9 || bill?.trangThai === 10">Lý do hoàn hàng: </b>
+                {{ bill?.ghiChuHoanHang }}
+            </td>
+            <td ></td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Hiển thị thông tin giao hàng -->
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <td style="width: 50%;" class="text-left">Thông tin người nhận</td>
+            <td style="width: 50%;" class="text-left">Địa chỉ giao hàng</td>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td class="text-left">
+                <span>{{ bill?.user.firstName }} {{ bill?.user.lastName }}</span><br>
+                {{ bill?.user.diaChi }}, <br>
+                {{ bill?.user.sdt }}
+            </td>
+            <td class="text-left">
+                {{ bill?.diaChi }}<br>
+                {{ bill?.xa }}<br>
+                {{ bill?.huyen }}<br>
+                {{ bill?.tinh }}<br>
+                {{ bill?.ghiChu }}
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Hiển thị danh sách sản phẩm -->
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <td class="text-left">Tên sản phẩm</td>
+                <td class="text-right">Số lượng</td>
+                <td class="text-right">Giá</td>
+                <td class="text-right">Tổng tiền</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let item of bill_details">
+                <td class="text-left">{{ item.sanPham.ten }}</td>
+                <td class="text-right">{{ item.soluong }}</td>
+                <td class="text-right">{{ item.sanPham?.khuyenMai | number }}</td>
+                <td class="text-right">{{ (item.soluong * item.sanPham?.khuyenMai) | number }}</td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="2"></td>
+                <td class="text-right"><b>Tổng giá trị đơn hàng</b></td>
+                <td class="text-right">{{ tongtien | number }} VNĐ</td>
+            </tr>
+            <!-- <tr>
+                <td colspan="2"></td>
+                <td class="text-right"><b>Phí giao hàng</b></td>
+                <td class="text-right">25,000 VNĐ</td>
+            </tr> -->
+            <!-- <tr>
+                <td colspan="2"></td>
+                <td class="text-right"><b>Giảm giá</b></td>
+                <td class="text-right">{{ (tongtien - bill?.tongTien) | number }} VNĐ</td>
+            </tr> -->
+            <tr>
+                <td colspan="2"></td>
+                <td class="text-right"><b>Tổng tiền phải trả</b></td>
+                <td class="text-right">{{ bill?.tongTien | number }} VNĐ</td>
+            </tr>
+        </tfoot>
+    </table>
+</div>
+
+<!-- Nút hủy đơn -->
+<div class="buttons clearfix" style="padding-bottom: 20px;">
+    <div class="pull-right" style="padding-left: 20px;">
+        <a class="btn btn-primary" [routerLink]="'/history'">Trở về</a>
+    </div>
+    <div *ngIf="bill?.trangThai === 0" class="pull-right">
+        <a class="btn btn-primary" (click)="Huy()">Huỷ đơn</a>
+    </div>
+
+    <div *ngIf="bill?.trangThai === 2" class="pull-right">
+        <a class="btn btn-primary" (click)="openModal()">Hoàn hàng</a>
+    </div>
+    <!--  (click)="Return(bill)"  -->
+ 
+</div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" tabindex="-1" [ngClass]="{'d-block': isShowModal}" *ngIf="isShowModal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Lý do hoàn hàng</h5>
+          <button type="button" class="btn-close" (click)="closeModal()"></button>
+        </div>
+        <div class="modal-body">
+          <textarea [(ngModel)]="lyDoHoanHang" class="form-control" rows="3"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="closeModal()">Đóng</button>
+          <button class="btn btn-primary" (click)="HoanDon(bill)">Gửi yêu cầu hoàn</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

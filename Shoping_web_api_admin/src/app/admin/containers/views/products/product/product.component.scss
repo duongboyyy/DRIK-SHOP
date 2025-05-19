@@ -1,0 +1,22 @@
+.image-preview {
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
+  }
+  
+  .image-preview img {
+    display: block;
+  }
+  
+  .image-preview button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50%;
+  }
+  

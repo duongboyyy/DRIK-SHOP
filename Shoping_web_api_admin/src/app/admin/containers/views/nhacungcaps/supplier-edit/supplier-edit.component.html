@@ -1,0 +1,41 @@
+<p-dialog #dialog header="Thêm/ Sửa nhà cung cấp" positionTop="50" [(visible)]="isShow" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body" [style]="{width: '50vw'}" [baseZIndex]="10000">
+
+    <div class="ui-g-12 ui-lg-12">
+        <div class="vs-form-control ui-g">
+            <form action="" [formGroup]="formGroup">
+                <div class="row" style="margin-top:20px;">
+                    <div class="col-6 mb-20">
+                        <span class="p-float-label">
+                            <input [(ngModel)]="modelEdit.ten" formControlName="ten" class="w-100-p" type="text" pInputText>
+                            <label for="float-input">Tên nhà cung cấp</label>
+                        </span>
+                        <div class="warning-valid" *ngIf="!formGroup.controls['ten'].valid && submitted">Tên không được bỏ trống</div>
+                    </div>
+                    <div class="col-6 mb-20">
+                        <span class="p-float-label">
+                            <input [(ngModel)]="modelEdit.sdt" formControlName="sdt" class="w-100-p" type="text" pInputText>
+                            <label for="float-input">Số điện thoại</label>
+                        </span>
+                    </div>
+                    <div class="col-6 mb-20">
+                        <span class="p-float-label">
+                            <textarea [(ngModel)]="modelEdit.thongTin" formControlName="thongTin" class="w-100-p" type="text" pInputText></textarea>
+                            <label for="float-input">Thông tin</label>
+                        </span>
+                    </div>
+                    <div class="col-6 mb-20">
+                        <span class="p-float-label">
+                            <textarea [(ngModel)]="modelEdit.diaChi" formControlName="diaChi" class="w-100-p" type="text" pInputText></textarea>
+                            <label for="float-input">Địa chỉ</label>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <p-footer>
+        <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+        <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+    </p-footer>
+</p-dialog>

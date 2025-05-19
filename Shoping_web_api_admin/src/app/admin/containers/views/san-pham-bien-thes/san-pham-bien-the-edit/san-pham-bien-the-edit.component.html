@@ -1,0 +1,52 @@
+<p-dialog #dialog header="Thêm/ Sửa sản phẩm biến thể" positionTop="50" [(visible)]="isShow" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body" [style]="{width: '50vw'}" [baseZIndex]="10000">
+
+    <div class="ui-g-12 ui-lg-12">
+        <div class="vs-form-control ui-g">
+            <form action="" [formGroup]="formGroup">
+                <div class="row" style="margin-top:20px;">
+                    <div class="col-12 mb-20" >
+                        <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" 
+                        (onFilter)="onProductFilter($event)" (onChange)="GetIdCategory($event)" 
+                        [emptyFilterMessage]="'Không tìm thấy kết quả'" placeholder="Chọn sản phẩm" 
+                        [(ngModel)]="modelEdit.id_SanPham" [ngModelOptions]="{ standalone: true}" 
+                        formControlName="id_SanPham" [loading]="isLoading" [options]="product_autoComplete" 
+                        [style]="{'width':'100%', 'min-width':'0'}" appendTo="body">
+                            <ng-template let-item pTemplate="item">
+                                <div class="product-item">
+                                    <img [src]="getImage(item.image)" style="width: 20px;" alt="{{item.label}}" class="product-image" />
+                                    <span class="product-name">{{item.label}}</span>
+                                </div>
+                            </ng-template>
+                        </p-dropdown>
+                        <div class="warning-valid" *ngIf="!formGroup.controls['id_SanPham'].valid && submitted">Không được bỏ trống</div>
+                    </div>
+                    <div class="col-8 mb-20" >
+                        <div class="__input-wrapper" style="position: relative;">
+                            <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" [(ngModel)]="modelEdit.id_Mau" 
+                            [ngModelOptions]="{ standalone: true}" formControlName="id_Mau" 
+                            [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="color_category_name" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                        </div>
+                        <div class="warning-valid" *ngIf="!formGroup.controls['id_Mau'].valid && submitted">Danh mục là trường bắt buộc</div>
+                    </div>
+                    <div class="col-4 mb-20" >
+                        <div class="__input-wrapper" style="position: relative;">
+                            <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" [(ngModel)]="modelEdit.sizeId" [ngModelOptions]="{ standalone: true}" formControlName="sizeId" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="size_category_name" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                        </div>
+                        <div class="warning-valid" *ngIf="!formGroup.controls['sizeId'].valid && submitted">Danh mục là trường bắt buộc</div>
+                    </div>
+                    <div class="col-12 mb-20" *ngIf="isAdd === true">
+                        <span class="p-float-label">
+                            <input disabled type="number" [(ngModel)]="modelEdit.soLuongTon" [ngModelOptions]="{ standalone: true}" class="w-100-p" pInputText >
+                            <label for="float-input">Tồn kho</label>
+                        </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <p-footer>
+        <button *ngIf="!this.isAdd" pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+        <button *ngIf="!this.isAdd" pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+    </p-footer>
+</p-dialog>

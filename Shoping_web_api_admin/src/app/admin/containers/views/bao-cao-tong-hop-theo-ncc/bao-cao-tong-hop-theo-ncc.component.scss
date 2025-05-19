@@ -1,0 +1,129 @@
+.__search-filter-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    align-items: flex-end;
+    padding: 1rem;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  
+    p-calendar {
+      flex: 1 1 200px;
+      max-width: 250px;
+  
+      ::ng-deep .ui-inputtext {
+        width: 100%;
+        padding: 0.5rem 0.75rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+      }
+  
+      ::ng-deep .ui-calendar-button {
+        background: transparent;
+        border: none;
+        color: #007ad9;
+      }
+    }
+  
+    button.vs-btn {
+      background-color: #007ad9;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      border: none;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: background-color 0.3s ease;
+  
+      &:hover {
+        background-color: #005ea6;
+      }
+  
+      .__icon {
+        font-size: 1rem;
+      }
+  
+      .__label {
+        font-size: 0.95rem;
+      }
+    }
+  }
+
+  .__right-content {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 1rem;
+  
+    .__action-tabs {
+      list-style: none;
+      display: flex;
+      gap: 1rem;
+      margin: 0;
+      padding: 0;
+  
+      .__tab-item-wrapper {
+        position: relative;
+  
+        .__tab-item {
+          display: flex;
+          align-items: center;
+          gap: 0.5rem;
+          cursor: pointer;
+          padding: 0.6rem 1rem;
+          background-color: #f0f4f8;
+          border-radius: 6px;
+          transition: background-color 0.3s ease;
+  
+          .__icon {
+            font-size: 1.1rem;
+            color: #007ad9;
+          }
+  
+          .__label {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #333;
+          }
+  
+          &:hover {
+            background-color: #e0e8f0;
+          }
+        }
+  
+        .__column-list {
+          position: absolute;
+          top: 110%;
+          right: 0;
+          background-color: white;
+          border: 1px solid #ddd;
+          border-radius: 6px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          padding: 0.75rem;
+          z-index: 1000;
+          min-width: 220px;
+  
+          .__column-item {
+            margin-bottom: 0.5rem;
+  
+            &:last-child {
+              margin-bottom: 0;
+            }
+  
+            ::ng-deep .ui-chkbox-label {
+              font-size: 0.9rem;
+              color: #333;
+            }
+  
+            ::ng-deep .ui-chkbox-box {
+              border-radius: 4px;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  

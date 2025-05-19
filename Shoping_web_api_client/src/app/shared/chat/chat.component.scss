@@ -1,0 +1,31 @@
+.chat-bubble {
+  position: fixed;
+  bottom: 20px; /* Khoảng cách từ đáy màn hình */
+  right: 20px;  /* Khoảng cách từ mép phải màn hình */
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #0084ff; /* Màu nền của bong bóng */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Hiệu ứng */
+  z-index: 1000; /* Đảm bảo nổi lên trên */
+}
+
+.chat-bubble img {
+  width: 36px;
+  height: 36px;
+  transition: transform 0.3s ease; /* Hiệu ứng hình ảnh */
+}
+
+.chat-bubble:hover {
+  transform: scale(1.2); /* Tăng kích thước toàn bộ bong bóng */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Tăng độ nổi */
+}
+
+.chat-bubble:hover img {
+  transform: scale(1.1); /* Tăng kích thước icon bên trong */
+}

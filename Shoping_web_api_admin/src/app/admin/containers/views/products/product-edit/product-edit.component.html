@@ -1,0 +1,119 @@
+<p-dialog #dialog header="Thêm/ Sửa sản phẩm" positionTop="50" [(visible)]="isShow" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body" [style]="{width: '50vw'}" [baseZIndex]="10000">
+  
+  <div class="ui-g-12 ui-lg-12">
+    <div class="vs-form-control ui-g"> 
+        <form action="" [formGroup]="formGroup">
+            <div class="row" style="margin-top:20px;">
+                <div class="col-8 mb-20">
+                    <span class="p-float-label">
+                        <input [(ngModel)]="modelEdit.ten" formControlName="ten" class="w-100-p" type="text" pInputText>
+                        <label for="float-input">Tên sản phẩm</label>
+                    </span>
+                    <div class="warning-valid" *ngIf="!formGroup.controls['ten'].valid && submitted">tên sản phẩm là bắt buộc!</div>
+                   </div>
+                   <div class="col-4 mb-20">
+                    <div class="__input-wrapper" style="position: relative;">
+                        <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" [(ngModel)]="modelEdit.id_Loai" formControlName="id_Loai" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="category_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                    </div>
+                    <div class="warning-valid" *ngIf="!formGroup.controls['id_Loai'].valid && submitted">Danh mục là trường bắt buộc</div>
+                   </div>
+                   <div class="col-6 mb-20">
+                    <div class="__input-wrapper" style="position: relative;">
+                        <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" [(ngModel)]="modelEdit.tag" formControlName="tag" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="tag_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                    </div>    
+                   </div>
+                   <div class="col-6 mb-20">
+                    <div class="__input-wrapper" style="position: relative;">
+                        <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" [emptyFilterMessage]="'Không tìm thấy kết quả'" [(ngModel)]="modelEdit.gioiTinh" formControlName="gioiTinh" [options]="gender_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                    </div>    
+                   </div>
+                   <div class="col-6 mb-20">
+                    <span class="p-float-label">
+                        <textarea class="w-100-p" type="text" [(ngModel)]="modelEdit.moTa" formControlName="moTa" pInputText></textarea>
+                        <label for="float-input">Mô tả</label>
+                    </span>
+                   </div>
+                   <div class="col-6 mb-20">
+                    <span class="p-float-label">
+                        <textarea class="w-100-p" [(ngModel)]="modelEdit.thanhPhan" formControlName="thanhPhan" type="text" pInputText></textarea>
+                        <label for="float-input">Thành phần</label>
+                    </span>
+                   </div>
+                   <div class="col-6 mb-20">
+                    <div class="__input-wrapper" style="position: relative;">
+                        <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" [(ngModel)]="modelEdit.id_NhaCungCap" formControlName="id_NhaCungCap" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="supplier_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                    </div>    
+                   </div>
+                   <div class="col-6 mb-20">
+                    <div class="__input-wrapper" style="position: relative;">
+                        <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" [emptyFilterMessage]="'Không tìm thấy kết quả'" [(ngModel)]="modelEdit.id_NhanHieu" formControlName="id_NhanHieu" [options]="brand_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                    </div>    
+                   </div>
+                   <div class="col-12 mb-20">
+                    <span class="p-float-label">
+                        <input class="w-100-p" type="text" [(ngModel)]="modelEdit.huongDan" formControlName="huongDan" pInputText>
+                        <label for="float-input">Hướng dẫn</label>
+                    </span>
+                   </div>
+                   <div class="col-12 mb-20">
+                    <div class="__input-wrapper" style="position: relative;">
+                        <p-dropdown [disabled]="true" [baseZIndex]="15000" [showClear]="true" filter="true" [emptyFilterMessage]="'Không tìm thấy kết quả'" [(ngModel)]="modelEdit.id_CTKM" formControlName="id_CTKM" [options]="ctkm_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                    </div>    
+                   </div>
+                   <div class="col-4 mb-20">
+                    <span class="p-float-label">
+                        <input class="w-100-p" type="number" [(ngModel)]="modelEdit.giaBan" formControlName="giaBan" pInputText>
+                        <label for="float-input">Giá bán (VNĐ)</label>
+                    </span>
+                    <div class="warning-valid" *ngIf="!formGroup.controls['giaBan'].valid && submitted">giá bán là trường bắt buộc!</div>
+
+                   </div>
+                   <div class="col-4 mb-20">
+                    <span class="p-float-label">
+                        <input class="w-100-p" type="number"  [(ngModel)]="modelEdit.giaNhap" formControlName="giaNhap" pInputText>
+                        <label for="float-input">Giá nhập (VNĐ)</label>
+                    </span>
+                    <div class="warning-valid" *ngIf="!formGroup.controls['giaNhap'].valid && submitted">giá nhập là trường bắt buộc!</div>
+                   </div>
+                   <div class="col-4 mb-20">
+                    <span class="p-float-label">
+                        <input class="w-100-p" type="number"  [(ngModel)]="modelEdit.khuyenMai" formControlName="khuyenMai" pInputText>
+                        <label for="float-input">Khuyến mãi (VNĐ)</label>
+                    </span>
+                   </div>
+
+                   <div class="col-6 mb-20">
+                    <div class="__input-wrapper" style="position: relative;">
+                        <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" [emptyFilterMessage]="'Không tìm thấy kết quả'" [(ngModel)]="modelEdit.trangThaiHoatDong" formControlName="trangThaiHoatDong" [options]="state_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                    </div>
+                    <div class="warning-valid" *ngIf="!formGroup.controls['trangThaiHoatDong'].valid && submitted">trạng thái sản phẩm bắt buộc!</div>
+                   </div>
+                   <div class="col-6 mb-20">
+                       <div class="__input-wrapper" style="position: relative;">
+                           <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" [emptyFilterMessage]="'Không tìm thấy kết quả'" [(ngModel)]="modelEdit.trangThaiSanPham" formControlName="trangThaiSanPham" [options]="productState_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                       </div>
+                       <div class="warning-valid" *ngIf="!formGroup.controls['trangThaiHoatDong'].valid && submitted">trường thông tin bắt buộc!</div>
+                   </div>
+                   <div class="form-group col-12">
+                        <div class="custom-file">
+                            <input type="file" id="fileInput" multiple accept="image/*" (change)="onFileSelected($event)" class="custom-file-input">
+                            <label class="custom-file-label" for="fileInput">Chọn ảnh sản phẩm</label>
+                        </div>
+                        <div class="show-img mt-20">
+                            <div *ngFor="let url of urls; let i = index" class="image-preview">
+                                <img [src]="url" class="rounded" width="180">
+                                <button (click)="removeImage(i, 1)">X</button>
+                            </div>
+                        </div>
+                        <input type="hidden" [value]="deletedImages.join(',')" formControlName="deletedImages">
+                    </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p-footer>
+    <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+    <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+</p-footer>
+</p-dialog>

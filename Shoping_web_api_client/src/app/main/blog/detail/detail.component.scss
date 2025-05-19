@@ -1,0 +1,46 @@
+select{
+    width: 290px;
+}
+
+    /* Đảm bảo khung ảnh luôn có cùng kích thước */
+    .wrap-pic-w {
+        height: 300px; /* Độ cao của khung ảnh, có thể thay đổi */
+        overflow: hidden;
+        position: relative;
+    }
+
+    .wrap-pic-w img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Đảm bảo ảnh luôn phủ đầy khung mà không bị méo */
+    }
+
+    .slick3 .item-slick3 {
+        margin: 0 10px;
+    }
+
+    .slick3 {
+        display: flex;
+         gap: 0px;
+    }
+    .title-custom {
+        font-weight: bold;    /* In đậm */
+        font-size: 36px;      /* Kích thước chữ lớn */
+        text-align: center;   /* Căn giữa */
+    }
+    .content-collapsed {
+        max-height: 150px;   /* Giới hạn chiều cao của phần nội dung */
+        overflow: hidden;
+    }
+
+    .content-expanded {
+        max-height: none;   /* Cho phép nội dung mở rộng đầy đủ */
+    }
+
+    .btn-link {
+        background: none;
+        border: none;
+        color: #007bff;
+        cursor: pointer;
+        text-decoration: underline;
+    }

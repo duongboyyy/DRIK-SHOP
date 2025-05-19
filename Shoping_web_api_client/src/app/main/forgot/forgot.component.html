@@ -1,0 +1,94 @@
+<div class="bg-grey-lighter min-h-screen flex flex-col">
+    <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+        <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+            <!-- Form Nhập Email -->
+            <div *ngIf="isMail" class="email-form">
+              <h1 class="mb-8 text-3xl text-center">Quên mật khẩu</h1>
+              <form [formGroup]="userFormGroup" (ngSubmit)="onSubmitEmail()">
+                <div class="form-group">
+                  <label for="email" class="text-xl font-semibold">Nhập email của bạn:</label>
+                  <input
+                    id="email"
+                    type="email"
+                    formControlName="email"
+                    class="form-control"
+                    placeholder="Email của bạn"
+                    style="height: 48px; font-size: 18px;"
+                  />
+                  <div *ngIf="emailControl.invalid && emailControl.touched" class="error">
+                    Vui lòng nhập email hợp lệ.
+                  </div>
+                </div>
+                <button type="submit" class="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1" style="color: white;background-color: black;" [disabled]="userFormGroup.invalid">Gửi mã xác nhận</button>
+              </form>
+            </div>
+          
+            <!-- Form Nhập Mã Xác Nhận -->
+            <div *ngIf="isCodeSent" class="code-form">
+              <h1 class="mb-8 text-3xl text-center">Nhập mã xác nhận</h1>
+              <form [formGroup]="codeFormGroup" (ngSubmit)="onSubmitCode()">
+                <div class="form-group">
+                  <label for="code">Mã xác nhận đã gửi qua email:</label>
+                  <input
+                    id="code"
+                    type="text"
+                    formControlName="code"
+                    class="form-control"
+                    placeholder="Nhập mã"
+                  />
+                  <div *ngIf="code.invalid && code.touched" class="error">
+                    Vui lòng nhập mã hợp lệ.
+                  </div>
+                </div>
+                <button type="submit" class="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1" style="color: white;background-color: black;" [disabled]="codeFormGroup.invalid">Xác nhận</button>
+              </form>
+            </div>
+          
+            <!-- Form Nhập Mật Khẩu Mới -->
+        <div *ngIf="isCodeCorrect" class="password-form">
+            <h1 class="mb-8 text-3xl text-center">Nhập mật khẩu mới</h1>
+            <form [formGroup]="passwordFormGroup" (ngSubmit)="onSubmitPassword()">
+              <div class="form-group">
+                <label for="password">Mật khẩu mới:</label>
+                <input
+                  id="password"
+                  type="password"
+                  formControlName="password"
+                  class="form-control"
+                  placeholder="Mật khẩu mới"
+                />
+                <div *ngIf="password.invalid && password.touched" class="error">
+                  Mật khẩu phải ít nhất 6 ký tự.
+                </div>
+              </div>
+          
+              <div class="form-group">
+                <label for="confirmPassword">Nhập lại mật khẩu:</label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  formControlName="confirmPassword"
+                  class="form-control"
+                  placeholder="Nhập lại mật khẩu"
+                />
+                <div *ngIf="confirmPassword.invalid && confirmPassword.touched" class="error">
+                  Mật khẩu nhập lại phải khớp với mật khẩu mới.
+                </div>
+              </div>
+          
+              <button type="submit" class="w-full text-center py-3 rounded bg-green text-white hover:bg-green-dark focus:outline-none my-1" style="color: white;background-color: black;" [disabled]="passwordFormGroup.invalid">Đặt lại mật khẩu</button>
+            </form>
+          </div>
+        <!-- <div class="text-grey-dark mt-6">
+            Vui lòng
+            <a class="no-underline border-b border-blue text-blue" [routerLink]="'/login'">
+                Đăng nhập
+            </a>.
+        </div> -->
+    </div>
+  </div>
+  
+  
+
+
+   

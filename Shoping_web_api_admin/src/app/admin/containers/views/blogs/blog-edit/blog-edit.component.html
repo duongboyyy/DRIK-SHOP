@@ -1,0 +1,43 @@
+<p-dialog #dialog header="Thêm/ Sửa tin tức" positionTop="50" [(visible)]="isShow" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body" [style]="{width: '50vw'}" [baseZIndex]="10000">
+  <div class="ui-g-12 ui-lg-12">
+    <div class="vs-form-control ui-g"> 
+        <form action="" [formGroup]="formGroup">
+            <div class="row" style="margin-top:20px;">
+                <div class="col-12 mb-20">
+                    <span class="p-float-label">
+                        <input [(ngModel)]="modelEdit.tieuDe" formControlName="tieuDe" class="w-100-p" type="text" pInputText>
+                        <label for="float-input">Tiêu đề</label>
+                    </span>
+                    <div class="warning-valid" *ngIf="!formGroup.controls['tieuDe'].valid && submitted">trường thông tin bắt buộc!</div>
+                   </div>
+                   <div class="col-12 mb-20">
+                    <div class="p-float-label">
+                        <p-editor [(ngModel)]="modelEdit.noiDung" formControlName="noiDung" class="w-100-p" type="text" [style]="{ height: '320px' }" pInputText></p-editor>
+                        <!-- <input [(ngModel)]="modelEdit.noiDung" formControlName="noiDung" class="w-100-p" type="text" pInputText /> -->
+                        <!-- <label for="float-input">Nội dung</label> -->
+                    </div>
+                   </div>
+                   
+                   <div class="form-group col-12">
+                        <div class="custom-file">
+                            <input type="file" id="fileInput" multiple accept="image/*" (change)="onFileSelected($event)" class="custom-file-input">
+                            <label class="custom-file-label" for="fileInput">Chọn ảnh đại diện</label>
+                        </div>
+                        <div class="show-img mt-20">
+                            <div *ngFor="let url of urls; let i = index" class="image-preview">
+                                <img [src]="url" class="rounded" width="180">
+                                <button (click)="removeImage(i, 1)">X</button>
+                            </div>
+                        </div>
+                        <input type="hidden" [value]="deletedImages.join(',')" formControlName="deletedImages">
+                    </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<p-footer>
+    <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+    <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+</p-footer>
+</p-dialog>

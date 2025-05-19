@@ -1,0 +1,11 @@
+<div class="wrapper">
+    <app-header></app-header>
+    <app-cart></app-cart>
+  
+    <main class="content">
+      <router-outlet></router-outlet>
+      <app-chat *ngIf="shouldShowChatBubble()"></app-chat>
+    </main>
+  
+    <app-footer></app-footer>
+  </div>

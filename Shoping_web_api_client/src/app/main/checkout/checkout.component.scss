@@ -1,0 +1,64 @@
+select{
+  width: 239px;
+}
+
+.option-payment {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  max-width: 600px;
+  margin: 20px auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.header-payment {
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.header-payment h2 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.payment-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.select-method {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+.select-method:hover {
+  background-color: #f0f0f0;
+  border-color: #007bff;
+}
+
+.select-method p-checkbox {
+  margin-right: 10px;
+}
+
+.select-method button {
+  all: unset;
+  font-size: 16px;
+  font-weight: 500;
+  color: #007bff;
+  cursor: pointer;
+}
+
+.select-method button:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,44 @@
+<!-- breadcrumb -->
+<div class="container">
+    <div class="bread-crumb flex-w p-r-15 p-t-30 p-lr-0-lg">
+        <a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+            Trang chủ
+            <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
+        </a>
+        <a [routerLink]="['/account']" class="stext-109 cl8 hov-cl1 trans-04">
+            Tài khoản
+            <!-- <i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i> -->
+        </a>
+    </div>
+</div>
+<div class="main-container container mh-300">
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="gray">THÔNG TIN TÀI KHOẢN</h3>
+            <hr>
+            <a  class="" *ngIf="this.user!=null">
+                Xin chào, {{this.user.firstName+" "+this.user.lastName}}
+            </a>
+           
+              <a [routerLink]="['/info_user']" class="" *ngIf="this.user!=null">
+               Thay đổi thông tin cá nhân
+            </a>
+              <a [routerLink]="['/reset']" class="" *ngIf="this.user!=null">
+                  Đổi mật khẩu
+              </a>
+              <a (click)="logout()" href="#" class="" *ngIf="this.user!=null">
+                  Đăng xuất
+              </a>
+        </div>
+        <div class="col-md-6">
+            <h3 class="gray">SẢN PHÂM YÊU THÍCH</h3>
+            <hr>
+            <a [routerLink]="['/like']" class="" *ngIf="this.user!=null">
+                Sản phẩm yêu thích
+              </a>
+            <a [routerLink]="['/history']" class="" *ngIf="this.user!=null">
+                Lịch sử mua hàng
+              </a>
+        </div>
+    </div>
+</div>

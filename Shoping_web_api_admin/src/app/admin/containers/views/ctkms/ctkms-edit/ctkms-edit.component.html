@@ -1,0 +1,85 @@
+<p-dialog #dialog header="Thêm/ Sửa CTKM" positionTop="50" [(visible)]="isShow" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body" [style]="{width: '50vw'}" [baseZIndex]="10000">
+  
+    <div class="ui-g-12 ui-lg-12">
+      <div class="vs-form-control ui-g"> 
+          <form action="" [formGroup]="formGroup">
+              <div class="row" style="margin-top:20px;">
+                  <div class="col-12 mb-20">
+                      <span class="p-float-label">
+                          <input [(ngModel)]="modelEdit.name" formControlName="Name" class="w-100-p" type="text" pInputText>
+                          <label for="float-input">Tên chương trình khuyến mại</label>
+                      </span>
+                      <div class="warning-valid" *ngIf="!formGroup.controls['Name'].valid && submitted">tên sản phẩm là bắt buộc!</div>
+                     </div>
+                   
+                     <div class="col-8 mb-20">
+                      <span class="p-float-label">
+                          <input class="w-100-p" [(ngModel)]="modelEdit.discountValue" formControlName="DiscountValue" type="number" pInputText>
+                          <label for="float-input">bao nhiêu</label>
+                      </span>
+                     </div>
+                    
+                     <div class="col-4 mb-20">
+                        <div class="__input-wrapper" style="position: relative;">
+                            <p-dropdown [baseZIndex]="15000" [showClear]="true" filter="true" [(ngModel)]="modelEdit.discountType" formControlName="DiscountType" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="DiscountType_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                        </div>
+                        <div class="warning-valid" *ngIf="!formGroup.controls['DiscountType'].valid && submitted">Danh mục là trường bắt buộc</div>
+                       </div>
+                     
+                       <div class="col-12 mb-20">
+                        <span class="p-float-label">
+                          <p-calendar 
+                            [(ngModel)]="modelEdit.startDate" 
+                            formControlName="StartDate" 
+                            dateFormat="dd/mm/yy" 
+                            monthNavigator="true" 
+                            yearNavigator="true" 
+                            [yearRange]="'2000:2030'">
+                          </p-calendar>
+                          <label for="StartDate">Ngày bắt đầu</label>
+                        </span>
+                      </div>
+                      
+                      <div class="col-12 mb-20">
+                        <span class="p-float-label">
+                          <p-calendar 
+                            [(ngModel)]="modelEdit.endDate" 
+                            formControlName="EndDate" 
+                    
+                            dateFormat="dd/mm/yy" 
+                            monthNavigator="true" 
+                            yearNavigator="true" 
+                            [yearRange]="'2000:2030'">
+                          </p-calendar>
+                          <label for="EndDate">Ngày kết thúc</label>
+                        </span>
+                      </div>
+                       <div class="col-12 mb-20">
+                        <span class="p-float-label">
+                            <textarea class="w-100-p" type="text" [(ngModel)]="modelEdit.description" formControlName="Description" pInputText></textarea>
+                            <label for="float-input">Mô tả</label>
+                        </span>
+                       </div>
+                       <div class="form-group col-12">
+                        <div class="custom-file">
+                          <input type="file" id="fileInput" accept="image/*" (change)="onFileSelected($event)" class="custom-file-input">
+                          <label class="custom-file-label" for="fileInput">Chọn ảnh</label>
+                        </div>
+                        
+                        <!-- Image Preview -->
+                        <div class="show-img mt-20">
+                          <div  class="image-preview">
+                            <img [src]="urls" class="rounded" width="180" />
+                          </div>
+                        </div>
+                      </div>
+              </div>
+          </form>
+      </div>
+  </div>
+  
+  <p-footer>
+      <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+      <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+  </p-footer>
+  </p-dialog>

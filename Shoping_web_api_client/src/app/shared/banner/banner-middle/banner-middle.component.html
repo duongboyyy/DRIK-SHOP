@@ -1,0 +1,69 @@
+
+<div class="sec-banner bg0 p-b-50">
+    <div class="container custom-container">
+      <div class="slider-container">
+        <div class="slider slider2">
+          <div class="slide" *ngFor="let banner of list_banner_top; let i = index">
+            <div class="block1 wrap-pic-w">
+              <!-- Ảnh nền -->
+              <div class="background-wrapper">
+                <img 
+                [src]="getImage(banner.image)"
+                  [alt]="banner.name || 'IMG-BLOG'" 
+                  class="background-img"
+                />
+                <!-- <div class="background-overlay"></div> -->
+
+                <!-- Nội dung hiển thị trên ảnh nền -->
+                <div class="content-overlay">
+                  <!-- <div class="row banner-content">
+                    
+                    <a [href]="banner.link || ''"
+                    class="  flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3"
+                      rel="noopener noreferrer">
+                      <img
+                      [src]="getImage(banner.image)"
+                      [alt]="banner.name || 'IMG-BLOG'"
+                      class="banner-img"
+                    />
+                    </a>
+                  </div> -->
+                  <!-- <div class="col-md-6 col-xl-4 p-b-30 m-lr-auto"> -->
+                    <!-- <a 
+                      [href]="banner.link||'' " 
+                      class="block1-txt ab-t-l s-full flex-col-l-sb p-lr-38 p-tb-34 trans-03 respon3 container"
+                      rel="noopener noreferrer"
+                    >
+                    
+                      <div class="block1-txt-child1 flex-col-l">
+                        <div class="banner-name-container">
+                          <span class="banner-name rotate-in-up-right">
+                            {{ banner.name }}
+                          </span> 
+                        </div>
+                        <br>
+                        
+                        <div class="banner-description-container">
+                          <span class="banner-description">
+                            {{ banner.description }}
+                          </span>
+                        </div>
+                      
+                    </div>
+                    </a> -->
+                  </div>
+                  <!-- <div class="countdown-timer">
+                    {{ banner.countdownDisplay }}
+                  </div> -->
+                <!-- </div> -->
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="prev-btn" (click)="prevSlide()"></button>
+        <button class="next-btn" (click)="nextSlide()"></button>
+      </div>
+    </div>
+  </div>
+  

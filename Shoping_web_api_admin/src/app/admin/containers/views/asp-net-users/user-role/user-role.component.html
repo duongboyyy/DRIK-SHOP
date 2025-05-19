@@ -1,0 +1,36 @@
+<p-dialog #dialog [header]="header" styleClass="vs-modal force-full-width" [(visible)]="isShow" positionTop="50" [style]="{width: '50vw'}" [baseZIndex]="15000" [modal]="true" appendTo="body">
+  <div class="vs-form-container default-control-label-width vs-modal-content-panel">
+      <div class="box-notify">
+          <div class="row" *ngIf="isLoading">
+              <div class="col-md-12">
+                  <i class="fa fa-spinner fa-spin"></i> Đang tải dữ liệu xin đợi...
+              </div>
+          </div>
+          <div class="row" *ngIf="item && !isLoading">
+              <div class="col-12">
+                    <p-pickList [source]="pickListSource" [target]="pickListTarget" (onMoveToTarget)="onAssigne($event)" sourceHeader="Vai trò" targetHeader="Vai trò người dùng" dragdrop="true" [responsive]="true" filterBy="roleName">
+                        <ng-template let-role pTemplate="item">
+                            {{ role.roleName }}
+                        </ng-template>
+                    </p-pickList>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <p-footer>
+      <div class="ui-g row">
+          <div class="ui-g-12">
+              <button class="btn p-button-sm" (click)="save()" type="button">
+                  <span class="__icon fa fa-floppy-o"></span>
+                  <span class="__label">Lưu</span>
+              </button>
+
+              <button type="button" (click)="closePopupMethod(null)" class="btn vp-button-sm p-button-secondary">
+                  <span class="__icon fa fa-times"></span>
+                  <span class="__label">Đóng</span>
+              </button>
+          </div>
+      </div>
+  </p-footer>
+</p-dialog>

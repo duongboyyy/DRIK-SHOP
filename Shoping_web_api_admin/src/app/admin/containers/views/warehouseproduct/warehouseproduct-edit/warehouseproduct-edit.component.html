@@ -1,0 +1,92 @@
+<p-dialog #dialog header="Thêm/ Sửa sản phẩm" positionTop="50" [(visible)]="isShow" [contentStyle]="{'max-height': getMaxDialogHeight()}" [modal]="true" appendTo="body" [style]="{width: '50vw'}" [baseZIndex]="10000">
+  
+    <div class="ui-g-12 ui-lg-12">
+      <div class="vs-form-control ui-g"> 
+          <form action="" [formGroup]="formGroup">
+              <div class="row" style="margin-top:20px;">
+                  <div *ngIf="modelEdit.id<=0" class="col-8 mb-20">
+                      <span class="p-float-label">
+                          <input (focus)="isDropdownOpen = true"
+                          (blur)="onBlur()"
+                          autocomplete="off" [(ngModel)]="search_name" formControlName="NameSearch" (ngModelChange)="onNameChange($event)"  class="w-100-p" type="text" pInputText>
+                          <label for="float-input">Nhập tên sản phẩm</label>
+                      </span>
+                      <div *ngIf="isDropdownOpen && spbt_search?.length" class="custom-dropdown">
+                        <ul>
+                          <li *ngFor="let item of spbt_search" (mousedown)="selectItem(item)">
+                            {{ item.tenFull }}
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="warning-valid" *ngIf="spbt_listSelect?.length === 0 && submitted">
+                        Danh sách sản phẩm không được để trống!
+                      </div>
+                    </div>
+                     <div class="col-4 mb-20">
+                        <div class="__input-wrapper" style="position: relative;">
+                            <p-dropdown placeholder="Chọn kho" optionLabel="name" optionValue="id" [baseZIndex]="15000" [showClear]="true" filter="true" [(ngModel)]="modelEdit.khoId" formControlName="KhoId" [emptyFilterMessage]="'Không tìm thấy kết quả'" [options]="warehouse_options" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+                        </div>
+                        <div class="warning-valid" *ngIf="!formGroup.controls['KhoId'].valid && submitted">Danh mục là trường bắt buộc</div>
+                       </div>
+                     <div class="col-12">
+                        <h4 style="font-weight: bold;">Chi tiết phiếu nhập: </h4>
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Tên sản phẩm biến thể</th>
+                                <th>Số lượng</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr *ngFor="let item of spbt_listSelect;let i = index;">
+                                <td>{{i+1}}</td>
+                                <td>{{ item.tenFull }}</td>
+                                <td>
+                                    <input type="number"
+                                           [(ngModel)]="SoLuongNhap[item.id]"
+                                           [ngModelOptions]="{ standalone: true }"
+                                           min="1"
+                                           value="1"
+                                           class="form-control form-control-sm"
+                                           style="width: 100px;" />
+                                </td>
+                                <td>
+                                <button class="btn btn-danger" (click)="deleteDetail(item)">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+    
+                          
+                        <!-- <form [formGroup]="newFormGroupPhieuNhap" (ngSubmit)="onSubmit(newFormGroupPhieuNhap.value)">
+                            <div class="container" style="width: 30vw;">
+                                <div class="form-group">
+                                    <span class="label label-default" style="font-weight: bold;">Tạo ghi chú</span>
+                                    <textarea class="form-control" formControlName="GhiChu" style="margin-top: 0px; margin-bottom: 0px; height: 160px;width: 1050px;"></textarea>
+                                </div>
+                                <div class="form-group" style="justify-content:center;display: flex;">
+                                    <button pButton type="submit" class="p-button-sm" [disabled]="this.newFormGroupPhieuNhap.invalid">Tạo phiếu nhập kho</button>
+                                </div>
+                            </div>
+                        </form> -->
+                    </div>
+                       <!-- <div class="col-12 mb-20">
+                        <span class="p-float-label">
+                            <textarea class="w-100-p" type="text" [(ngModel)]="modelEdit.description" formControlName="Description" pInputText></textarea>
+                            <label for="float-input">Mô tả</label>
+                        </span>
+                       </div> -->
+              </div>
+          </form>
+      </div>
+  </div>
+  
+  <p-footer>
+      <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+      <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+  </p-footer>
+  </p-dialog>

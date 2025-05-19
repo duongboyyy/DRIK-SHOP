@@ -1,0 +1,140 @@
+<div class="vs-page-content app-ncc-bao-cao-ton-kho-san-pham">
+    <div class="vs-page-content-header-area">
+        <div class="ui-g">
+            <div class="ui-g-12 ui-md-7 ui-lg-9 __page-title-wrapper">
+                <h1 class="__page-title">Báo cáo tồn kho hàng</h1>
+            </div>
+
+            <div class="ui-g-12 ui-md-5 ui-lg-3 __search-box-wrapper">
+                <div class="__search-box">
+                    <input type="search" placeholder="Nhập từ khóa" name="search" class="__input vs-input" (keyup.enter)="onSearch()" [(ngModel)]="searchModel.key">
+                    <span class="__search-btn" (click)="onSearch()">
+                        <i class="fa fa-search"></i>
+                    </span>
+                </div>
+                <span class="__toggle-search-adv" (click)="toggleSearch()">
+                    <span [hidden]="openSearchAdv" class="fa fa-angle-double-down"></span>
+                <span [hidden]="!openSearchAdv" class="fa fa-angle-double-up "></span>
+                </span>
+            </div>
+        </div>
+
+        <div class="ui-g" [hidden]="!openSearchAdv">
+            <div class="ui-g-12 __search-filter-wrapper">
+                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.isAlert" [options]="trangThai_options">
+                </p-dropdown>
+
+                <!-- <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.idCuaHang" [options]="shops_options">
+                </p-dropdown>
+
+                <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" filter="true" [style]="{'width':'100%'}" [(ngModel)]="searchModel.idNhaCungcap" [options]="brands_options">
+                </p-dropdown> -->
+
+                <button class="vs-btn vs-modal-btn vs-btn-action-edit" type="button" (click)="onSearch()">
+                    <span class="__icon fa fa-search"></span>
+                    <span class="__label">Tìm kiếm</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="vs-page-content-body-area">
+        <div class="vs-data-table-area">
+            <div class="ui-g vs-data-table-area-inner">
+                <div class="ui-g-12 ui-lg-12 __main-table-area">
+
+                    <div class="ui-g __top-table-action">
+                        <!-- <div class="ui-g-6 __left-content">
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-edit ml-5" pTooltip="Làm mới tồn kho từ Odoo"
+                                (click)="refreshOdooStock()" tooltipPosition="top">
+                                <span class="__icon fa fa-refresh"></span>
+                                <span class="__label">Làm mới tồn kho Odoo</span>
+                            </button>
+                        </div> -->
+                        <!-- <div class="ui-g-6 __right-content ui-text-right">
+                            <button type="button" class="vs-btn vs-top-table-btn vs-btn-action-data" (click)="exportExcel()">
+                                <span class="__icon fa fa-download"></span>
+                                <span class="__label">Xuất danh sách</span>
+                            </button>
+                        </div> -->
+                    </div>
+                    <div class="ui-g vs-table-wrapper" id="table">
+                        <p-table #mainTable [columns]="cols" [rows]="limit" (onSort)="onSort($event)" [scrollable]="true" scrollHeight="auto" [value]="dataSource" [totalRecords]="total" class="vs-table responsive-table" [customSort]="true" [paginator]="true"
+                            [loading]="isLoading" [lazy]="true" (onPage)="onPage($event)" [resizableColumns]="true" dataKey="id">
+                            <ng-template pTemplate="colgroup" let-columns>
+                                <colgroup>
+                                    <col [style.width]="'40px'">
+                                    <ng-container *ngFor="let col of columns" [ngSwitch]="col.field">
+                                        <ng-container *ngSwitchDefault>
+                                            <col [hidden]="!col.visible" [style.width]="col.width" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''">
+                                        </ng-container>
+                                    </ng-container>
+                                </colgroup>
+                            </ng-template>
+                            <ng-template pTemplate="frozenrows" let-rowData let-columns="columns">
+                                <tr style="background-color:lightskyblue">
+                                    <th></th>
+                                    <td class="ui-text-right" *ngFor="let col of columns" [hidden]="!col.visible">
+                                        <b>{{rowData[col.field] | mask :'separator':'.'}}</b>
+                                    </td>
+                                    <th></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th class="align-center">STT</th>
+                                    <ng-container *ngFor="let col of columns;">
+                                        <th class="ui-resizable-column" [hidden]="!col.visible" pResizableColumn [pSortableColumn]="col.sort ? col.field : ''" class="ui-resizable-column">
+                                            {{col.header}}
+                                            <span *ngIf="col.sort"><p-sortIcon [field]="col.field"></p-sortIcon></span>
+                                        </th>
+                                    </ng-container>
+                                </tr>
+                            </ng-template>
+
+                            <ng-template pTemplate="body" let-item let-columns="columns" let-rowIndex="rowIndex">
+                                <tr align="center" [ngClass]="{'alter': item['soLuongTon'] < item['soLuongCanhBao'],'': item['soLuongTon'] >= item['soLuongCanhBao']}" [pSelectableRow]="item">
+                                    <td>{{rowIndex + 1}}</td>
+
+                                    <ng-container *ngFor="let col of columns;let i = index;" [ngSwitch]="col.field">
+                                        <td class="ui-resizable-column" [hidden]="!col.visible" [class.align-left]="!col.align || col.align === 'left'" [class.align-center]="col.align === 'center'" [class.align-right]="col.align === 'right'">
+                                            <ng-container *ngSwitchCase="'image'">
+                                                <vs-view-image [(file)]="item[col.field]" [height]="'80'">
+                                                </vs-view-image>
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'price'">
+                                                {{item[col.field] | mask :'separator':'.'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'quantity'">
+                                                {{item[col.field] | mask :'separator':'.'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'countOrderFinish'">
+                                                {{item[col.field] | mask :'separator':'.'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'countOrderNew'">
+                                                {{item[col.field] | mask :'separator':'.'}}
+                                            </ng-container>
+                                            <ng-container *ngSwitchCase="'countOrderWatting'">
+                                                {{(item[col.field]) | mask :'separator':'.'}}
+                                            </ng-container>
+                                            <span class="ui-resizable-column" *ngSwitchDefault class="break-word">{{item[col.field]}}</span>
+                                        </td>
+                                    </ng-container>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="paginatorleft" let-state>
+                                <div class="vs-table-paginator">
+                                    Hiển thị
+                                    <p-dropdown appendTo="body" [emptyFilterMessage]="'Không tìm thấy kết quả'" (onChange)="onChangeRowLimit()" [options]="listItemNumberPerPage" [(ngModel)]="limit">
+                                    </p-dropdown>
+                                    / trang
+                                    <span class="__total-record"> - Có {{total}} mục trong danh sách</span>
+                                </div>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

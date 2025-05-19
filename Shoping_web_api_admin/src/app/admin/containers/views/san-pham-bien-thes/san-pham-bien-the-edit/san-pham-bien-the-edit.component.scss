@@ -1,0 +1,66 @@
+.w-100-p {
+    width: 100% !important;
+}
+
+.mt-20 {
+    margin-top:20px !important;
+}
+.mb-20 {
+    margin-bottom: 20px !important;
+}
+
+.image-preview {
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-right: 10px;
+    border:1px solid #eee;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  }
+  
+  .image-preview img {
+    display: block;
+  }
+  
+  .image-preview button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: #004eff6e;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 50%;
+  }
+  
+  .show-img {
+    display: flex;
+  }
+
+  .warning-valid {
+    font-size: 10px;
+    color:#fc3d00;
+  }
+
+  .image-container {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .delete-button {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+  }
+
+  .ui-dropdown .ui-dropdown-panel {
+    position: relative;
+  }
+  
+  .ui-dropdown .ui-dropdown-loading-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }

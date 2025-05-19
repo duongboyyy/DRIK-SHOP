@@ -1,0 +1,124 @@
+<p-dialog #dialog header="Xác nhận đơn hàng" positionTop="50" [(visible)]="isShow" [modal]="true" [style]="{width: '80vw'}" [baseZIndex]="10000">
+  <form [formGroup]="formGroup">
+    <!-- Các trường thông tin hóa đơn -->
+    <div class="form-group">
+      <label for="hoaDonId" class="col-sm-4 control-label">Mã hóa đơn</label>
+      <span>{{ modelEdit.id }}</span>
+    </div>
+    <div class="form-group">
+      <label for="fullName" class="col-sm-4 control-label">Tên khách hàng</label>
+        <span>{{ modelEdit.fullName }}</span>
+    </div>
+    <div class="form-group">
+      <label for="diaChi" class="col-sm-4 control-label">Địa chỉ</label>
+        <span>{{ modelEdit.diaChi }}</span>
+    </div>
+    <div class="form-group">
+      <label for="email" class="col-sm-4 control-label">Email</label>
+        <span>{{ modelEdit.email }}</span>
+    </div>
+    <div class="form-group">
+      <label for="sdt" class="col-sm-4 control-label">Số điện thoại</label>
+        <span>{{ modelEdit.sdt }}</span>
+    </div>
+    <div class="form-group">
+      <label for="ngayTao" class="col-sm-4 control-label">Ngày tạo</label>
+        <span>{{ modelEdit.hoaDon?.ngayTao }}</span>
+    </div>
+    
+    <div class="form-group">
+      <label for="ghiChu" class="col-sm-4 control-label">Ghi chú</label>
+        <span>{{ modelEdit.hoaDon?.ghiChu }}</span>
+    </div>
+        <!-- Trạng thái đơn hàng --> 
+        <div class="col-6 mb-20">
+          <div class="__input-wrapper" style="display: flex;align-items: center; gap: 20px">
+            <label for="trangThai">Trạng thái</label>
+              <p-dropdown [baseZIndex]="15000" 
+               [(ngModel)]="hd.trangThai" 
+              formControlName="trangThai" [options]="trangThaiOptions" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"
+              (onChange)="onTrangThaiChange($event)"></p-dropdown>
+          </div>    
+         </div>
+    <!-- Chi tiết sản phẩm -->
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>Tên sản phẩm</th>
+          <th>Hình ảnh</th>
+          <th>Giá bán</th>
+          <th>Giá khuyến mãi</th>
+          <th>Số lượng</th>
+          <th>Size</th>
+          <th>Màu sắc</th>
+          <th>Thành tiền</th>
+          <th>Số lượng hoàn</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let chiTiet of modelEdit.chiTietHoaDons">
+          <td>{{ chiTiet.ten }}</td>
+          <td *ngIf="chiTiet.hinh">
+            <img src="https://localhost:44302/Images/list-image-product/{{chiTiet.hinh}}" class="rounded mb-3" width="80">
+          </td>
+          <td>{{ chiTiet.giaBan }}</td>
+          <td>{{ chiTiet.khuyenMai }}</td>
+          <td>{{ chiTiet.soLuong }}</td>
+          <td>{{ chiTiet.size }}</td>
+          <td>{{ chiTiet.mauSac }}</td>
+          <td>{{ chiTiet.thanhTien }}</td>
+
+          <td class="align-center" *ngIf="hd.trangThai>5">
+
+            <div class="checkbox-container">
+              <div class="checkbox-item">
+                <label for="checkbox" class="checkbox-label">Hoàn hàng</label>
+                <input type="checkbox" [checked]="chiTiet.isRefund" (change)="onCheckboxChange($event, chiTiet, i)" class="custom-checkbox">
+              </div>
+            
+              <div class="quantity-container">
+                <input 
+                  type="number" 
+                  min="1" 
+                  [value]="chiTiet.soLuongDaHoan" 
+                  max="{{chiTiet.soLuong}}" 
+                  (input)="onQuantityChange($event, chiTiet, i)" 
+                  class="quantity-input">
+              </div>
+              <div class="checkbox-item">
+                <label for="checkbox" class="checkbox-label">Hoàn về kho</label>
+                <input type="checkbox" [checked]="chiTiet.isBack" (change)="onCheckboxBackChange($event, chiTiet, i)" class="custom-checkbox">
+              </div>
+            </div>
+          
+          </td> 
+        </tr>
+        
+      </tbody>
+    </table>
+    <div class="row">
+      <div class="col-6 mb-20">
+        <!-- <label style="font-weight: bold; text-underline-position: auto;" *ngIf="modelEdit.hoaDon?.tongTien">
+          Phí ship: <span>{{ 25000 | number:'1.0-0' }} VNĐ</span>
+        </label> -->
+        <br>
+        <label style="font-weight: bold; text-underline-position: auto;" *ngIf="modelEdit.hoaDon?.tongTien">
+          Tổng tiền: <span>{{ (modelEdit.hoaDon?.tongTien) | number:'1.0-0' }} VNĐ</span>
+        </label>
+        <br>
+        <label style="font-weight: bold; text-underline-position: auto;">
+          Hình thức thanh Toán: <span>{{ hd.loaiThanhToan === 1 ? 'Tiền mặt' : hd.loaiThanhToan === 2 ? 'Thanh Toán Online' : 'Không xác định' }}</span>
+        </label>
+        <br>
+        <label style="font-weight: bold; text-underline-position: auto;">
+          Thanh Toán: <span>{{ hd.isPayed ? 'Đã thanh toán' : 'Chưa thanh toán' }}</span>
+        </label>
+      </div>
+    </div>
+  </form>
+  <p-footer>
+    <button pButton type="button" label="Xuất pdf" class="p-button-outlined" (click)="exportGeneratePdf(modelEdit?.id)"></button>
+    <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+    <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+  </p-footer>
+</p-dialog>

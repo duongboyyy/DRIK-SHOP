@@ -1,0 +1,70 @@
+<p-dialog #dialog header="Cập nhật nhiều" positionTop="50" [(visible)]="isShow" [modal]="true" [style]="{width: '80vw'}" [baseZIndex]="10000">
+    <form [formGroup]="formGroup">
+      <!-- Chi tiết sản phẩm -->
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Mã đơn</th>
+            <th>Ngày tạo</th>
+            <th>Tên khách hàng</th>
+            <th>Tổng tiền (VNĐ)</th>
+            <th>Hinh thức trả</th>
+            <th>Trạng thái</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let chiTiet of list;let i=index; ">
+            <td>{{i+1}}</td>
+            <td>{{ chiTiet.maHoaDon }}</td>
+            
+            <td>{{ chiTiet.ngayTao }}</td>
+            <td>{{ chiTiet.fullName }}</td>
+            <td>{{ chiTiet.tongTien | number:'1.0-0' }}</td>
+            <td>{{ chiTiet.loaiThanhToan }}</td>
+            <td>
+                <ng-container [ngSwitch]="chiTiet.trangThai">
+                  <span *ngSwitchCase="0">Chờ xác nhận</span>
+                  <span *ngSwitchCase="1">Đã xác nhận</span>
+                  <span *ngSwitchCase="2">Hoàn thành</span>
+                  <span *ngSwitchCase="3">Đã hủy</span>
+                  <span *ngSwitchCase="4">Đang giao hàng</span>
+                  <span *ngSwitchCase="5">Chờ thanh toán</span>
+                  <span *ngSwitchDefault>Không xác định</span>
+                </ng-container>
+              </td>
+          </tr>
+          
+        </tbody>
+      </table>
+      <!-- <h3 style="font-weight: bold; text-underline-position: auto;" *ngIf="modelEdit.hoaDon?.tongTien">
+        Tổng tiền: {{ modelEdit.hoaDon?.tongTien | number:'1.0-0' }} VNĐ
+      </h3>
+      <h3 style="font-weight: bold; text-underline-position: auto;">
+        Hình thức thanh Toán: {{ hd.loaiThanhToan === 1 ? 'Tiền mặt' : hd.loaiThanhToan === 2 ? 'Thanh Toán Online' : 'Không xác định' }}
+      </h3>
+      <h3 style="font-weight: bold; text-underline-position: auto;">
+        Thanh Toán: {{ hd.isPayed ? 'Đã thanh toán' : 'Chưa thanh toán' }}
+      </h3> -->
+  
+      <!-- Trạng thái đơn hàng --> 
+    <div class="col-6 mb-20">
+      <div class="__input-wrapper" style="position: relative;">
+        <label for="trangThai">Trạng thái</label>
+          <p-dropdown [baseZIndex]="15000" 
+           [(ngModel)]="hd.trangThai" 
+          formControlName="trangThai" [options]="trangThaiOptions" [style]="{'width':'100%', 'min-width':'0'}" appendTo="body"></p-dropdown>
+      </div>    
+     </div>
+       
+      
+      
+  
+    </form>
+    <p-footer>
+      <!-- <button pButton type="button" label="Xuất pdf" class="p-button-outlined" (click)="exportGeneratePdf(modelEdit?.id)"></button> -->
+      <button pButton type="button" label="Lưu" (click)="save()" class="p-button-sm"></button>
+      <button pButton type="button" label="Đóng" (click)="closeForm()" class="p-button-sm p-button-secondary"></button>
+    </p-footer>
+  </p-dialog>
+  
